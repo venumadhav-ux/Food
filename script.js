@@ -97,11 +97,15 @@ function renderMenu(){
  </section>`).join("");
  allItems().forEach(i=>renderAction(i.id));
 }
-function jump(id){document.getElementById("cat-"+id)?.scrollIntoView({behavior:"smooth",block:"start"})}
+function jump(id){
+ document.getElementById("cat-"+id)?.scrollIntoView({behavior:"smooth",block:"start"});
+ document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c.textContent.toLowerCase()===id.replaceAll("-"," ").toLowerCase()));
+}
 function changeQty(id,n){
  const i=item(id);
  if(orderType==="parcel" && i.diningOnly && n>0){alert("This combo is available for dining only.");return}
  cart[id]=Math.max(0,(cart[id]||0)+n); if(!cart[id])delete cart[id];
+ const cb=$("#cartButton"); if(n>0){cb.animate([{transform:"translateX(-50%) scale(.97)"},{transform:"translateX(-50%) scale(1)"}],{duration:180});}
  renderAction(id); updateCart();
 }
 function totals(){
