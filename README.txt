@@ -1,10 +1,28 @@
-SPICE STREET QR MENU
+FOOD ON WHEELS — CENTRALIZED DAILY ORDER COUNTER
 
-1. Open script.js.
-2. Change WHATSAPP_NUMBER to your WhatsApp number with country code, without + or spaces.
-   Example for India: 919876543210
-3. Edit menuData in script.js to change food names, descriptions and prices.
-4. Open index.html in a browser to test.
-5. For table QR codes use URLs such as:
-   https://YOUR-LIVE-SITE.com/?table=1
-   https://YOUR-LIVE-SITE.com/?table=2
+READY-TO-PUSH FILES
+
+Files:
+- index.html
+- script.js
+- style.css
+- api/order.js
+
+Order flow:
+QR -> menu -> cart -> Order on WhatsApp -> centralized daily order number.
+
+Order numbering:
+- First successful order button press in India calendar day: #1
+- Then #2, #3, ...
+- Next India calendar date starts at #1 automatically.
+- Redis INCR is atomic, so simultaneous customers receive different numbers.
+
+No customer/order history database is stored. Redis only keeps daily counter keys.
+
+Vercel environment variables required (Production):
+UPSTASH_REDIS_REST_URL
+UPSTASH_REDIS_REST_TOKEN
+
+IMPORTANT: never put the Redis token in GitHub or any frontend file.
+
+WhatsApp destination: 9010185837

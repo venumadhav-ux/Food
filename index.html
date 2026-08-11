@@ -1,48 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Spice Street | Digital Menu</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11100e">
+<title>Food On Wheels | Menu</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="hero">
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="brand-row">
+    <div class="logo-mark">FW</div>
     <div>
-      <div class="brand">SPICE STREET</div>
-      <h1>Good food.<br>Easy ordering.</h1>
-      <p>Freshly prepared favourites, delivered straight to your table.</p>
-    </div>
-    <div class="table-badge" id="tableBadge">Table —</div>
-  </header>
-
-  <main>
-    <div class="notice">📲 Add your favourites and send the order directly on WhatsApp.</div>
-    <div id="menu"></div>
-  </main>
-
-  <button class="cart-bar" id="cartButton" hidden>
-    <span>🛒 <b id="cartCount">0</b> items</span>
-    <strong>View cart · ₹<span id="cartTotal">0</span></strong>
-  </button>
-
-  <div class="modal" id="cartModal" hidden>
-    <div class="sheet">
-      <div class="sheet-head">
-        <h2>Your order</h2>
-        <button id="closeCart">×</button>
-      </div>
-      <div id="cartItems"></div>
-      <div class="customer">
-        <label>Table number</label>
-        <input id="tableInput" type="text" placeholder="e.g. 5">
-      </div>
-      <div class="total"><span>Total</span><strong>₹<span id="modalTotal">0</span></strong></div>
-      <button class="whatsapp" id="whatsappButton">Order on WhatsApp</button>
-      <p class="small">Your order will open in WhatsApp for confirmation.</p>
+      <div class="eyebrow">WELCOME TO</div>
+      <div class="brand-name" id="brandName">Food On Wheels</div>
     </div>
   </div>
+  <div class="hero-copy">
+    <span class="pill">FRESH • FAST • FLAVOURFUL</span>
+    <h1>Your table.<br><span>Your order.</span></h1>
+    <p>Choose your favourites and send the order straight to WhatsApp.</p>
+  </div>
+  <div class="hero-meta">
+    <span id="tableBadge">TABLE —</span>
+    <span>PRE-ORDERS AVAILABLE</span>
+  </div>
+</header>
 
-  <script src="script.js"></script>
+<main>
+  <section class="order-type-wrap">
+    <div class="section-label">ORDER TYPE</div>
+    <div class="order-type">
+      <button class="type active" data-type="dining">🍽️ <span>Dining</span></button>
+      <button class="type" data-type="parcel">🥡 <span>Parcel</span></button>
+    </div>
+    <div id="parcelNote" class="note" hidden>
+      <b>Parcel:</b> ₹10 charge per order. Combo items marked <b>Dining only</b> aren't available for parcel.
+    </div>
+  </section>
+
+  <nav id="categories" class="chips" aria-label="Menu categories"></nav>
+  <div id="menu"></div>
+</main>
+
+<button id="cartButton" class="cart-bar" hidden>
+  <span><span class="cart-icon">🛒</span> <b id="cartCount">0</b> items</span>
+  <strong>View cart · ₹<span id="cartTotal">0</span> <span class="arrow">→</span></strong>
+</button>
+
+<div id="cartModal" class="modal" hidden>
+  <section class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div><div class="eyebrow dark">YOUR ORDER</div><h2>Ready to order?</h2></div>
+      <button id="closeCart" class="close" aria-label="Close">×</button>
+    </div>
+    <div id="cartItems"></div>
+
+    <div class="form-card">
+      <div class="order-number-note">Your order number will be generated automatically when you place the order.</div>
+      <label for="notesInput">Special instructions <span>(optional)</span></label>
+      <textarea id="notesInput" rows="2" placeholder="Less spicy, no onion, etc."></textarea>
+    </div>
+
+    <div class="bill">
+      <div><span>Food total</span><b>₹<span id="foodTotal">0</span></b></div>
+      <div id="parcelLine" hidden><span>Parcel charge</span><b>₹10</b></div>
+      <div class="grand"><span>Total</span><b>₹<span id="modalTotal">0</span></b></div>
+    </div>
+
+    <button class="whatsapp" id="whatsappButton">
+      <span>Order on WhatsApp</span><span>→</span>
+    </button>
+    <p class="small">Your order will open in WhatsApp, ready for you to send.</p>
+  </section>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
