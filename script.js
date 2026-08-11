@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER="919999999999"; // CHANGE THIS to your WhatsApp number, country code included
+const WHATSAPP_NUMBER="919010185837"; // CHANGE THIS to your WhatsApp number, country code included
 
 const menuData=[
  {name:"Starters",items:[
@@ -36,7 +36,7 @@ function renderMenu(){
    <div><h3>${item.name}</h3><p>${item.desc}</p><div class="price">₹${money(item.price)}</div></div>
    <div id="action-${item.id}"></div>
   </div>`).join("")}</section>`).join("");
- menuData.flatMap(x=>x.items).forEach(renderAction);
+ menuData.flatMap(x=>x.items).forEach(item=>renderAction(item.id));
 }
 function findItem(id){return menuData.flatMap(x=>x.items).find(x=>x.id===id)}
 function renderAction(id){
