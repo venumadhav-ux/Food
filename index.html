@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Spice Street | Digital Menu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <div class="brand">SPICE STREET</div>
+      <h1>Good food.<br>Easy ordering.</h1>
+      <p>Freshly prepared favourites, delivered straight to your table.</p>
+    </div>
+    <div class="table-badge" id="tableBadge">Table —</div>
+  </header>
+
+  <main>
+    <div class="notice">📲 Add your favourites and send the order directly on WhatsApp.</div>
+    <div id="menu"></div>
+  </main>
+
+  <button class="cart-bar" id="cartButton" hidden>
+    <span>🛒 <b id="cartCount">0</b> items</span>
+    <strong>View cart · ₹<span id="cartTotal">0</span></strong>
+  </button>
+
+  <div class="modal" id="cartModal" hidden>
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2>Your order</h2>
+        <button id="closeCart">×</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="customer">
+        <label>Table number</label>
+        <input id="tableInput" type="text" placeholder="e.g. 5">
+      </div>
+      <div class="total"><span>Total</span><strong>₹<span id="modalTotal">0</span></strong></div>
+      <button class="whatsapp" id="whatsappButton">Order on WhatsApp</button>
+      <p class="small">Your order will open in WhatsApp for confirmation.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
