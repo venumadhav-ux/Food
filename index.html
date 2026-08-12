@@ -1,38 +1,71 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#11100f"><title>Food On Wheels | Order Online</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0b">
+<title>Food On Wheels | Order Online</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app-shell">
 <header class="hero">
- <div class="hero-orb a"></div><div class="hero-orb b"></div>
- <div class="hero-top"><div class="logo-mark">FW</div><div><div class="eyebrow">WELCOME TO</div><div class="brand-name" id="brandName">Food On Wheels</div></div><div class="status">● OPEN</div></div>
- <div class="hero-copy"><span class="hero-pill">🔥 FRESH • HOT • MADE FOR YOU</span><h1>What are you<br><em>craving today?</em></h1><p>Pick your favourites, build your order and send it straight to WhatsApp.</p></div>
- <button class="hero-cta" type="button" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Start ordering <b>↓</b></button>
+  <div class="hero-bg"></div><div class="hero-shade"></div>
+  <div class="hero-nav">
+    <div class="brand"><div class="brand-logo">FW</div><div><span>FOOD</span><b>ON WHEELS</b></div></div>
+    <div class="open-pill"><i></i> OPEN</div>
+  </div>
+  <div class="hero-copy">
+    <div class="eyebrow">🔥 FRESH. HOT. MADE FOR YOU.</div>
+    <h1>What are you<br><span>craving today?</span></h1>
+    <p>Delicious meals • Fast service • Made with love</p>
+    <button class="hero-cta" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Start Ordering <b>→</b></button>
+    <div class="social-proof"><span class="avatars">● ● ● ●</span><b>4.8 ★</b><small>Loved by 500+ customers</small></div>
+  </div>
 </header>
+
 <main>
- <section class="type-section"><span class="section-kicker">HOW ARE YOU EATING?</span><div class="order-type">
-  <button class="type active" data-type="dining" type="button"><span>🍽️</span><b>Dining<small>Eat here</small></b></button>
-  <button class="type" data-type="parcel" type="button"><span>🥡</span><b>Parcel<small>Take away</small></b></button>
- </div><div id="parcelNote" class="note" hidden>Parcel has a ₹10 charge. Combo items marked Dining Only aren't available for parcel.</div>
- </section>
- <div class="browse-head"><div><span class="section-kicker">EXPLORE THE MENU</span><h2>Pick your favourites</h2></div><span class="fast">⚡ FAST ORDER</span></div>
- <nav id="categories" class="chips"></nav>
- <div id="menu"><div class="loading">Loading your menu…</div></div>
+  <section class="order-mode">
+    <button class="type active" data-type="dining"><span class="mode-icon">🍽</span><strong>Dining<small>Enjoy at our place</small></strong></button>
+    <button class="type" data-type="parcel"><span class="mode-icon">🛍</span><strong>Parcel<small>Take it with you</small></strong></button>
+  </section>
+  <div id="parcelNote" class="note" hidden>Parcel has a ₹10 charge. Dining-only combos are removed automatically.</div>
+
+  <section class="section-title">
+    <div><span class="kicker">EXPLORE</span><h2>Choose your favourites</h2></div>
+    <span class="fast-badge">⚡ FAST ORDER</span>
+  </section>
+  <nav id="categories" class="chips"></nav>
+
+  <div id="menu"><div class="loading">Loading deliciousness…</div></div>
 </main>
 </div>
-<button id="cartButton" class="cart-bar" hidden type="button"><span>🛒 <b id="cartCount">0</b> items</span><strong>View cart · ₹<span id="cartTotal">0</span> →</strong></button>
-<div id="cartModal" class="modal" hidden><section class="sheet"><div class="handle"></div><div class="sheet-head"><div><span class="eyebrow dark">YOUR ORDER</span><h2>Almost there ✨</h2></div><button id="closeCart" class="close" type="button">×</button></div>
-<div class="progress"><i></i> Review your order</div><div id="cartItems"></div>
-<div class="form-card"><div class="order-note">🔢 <span><b>Order number is automatic</b><small>Today's next order number is generated when you place the order.</small></span></div>
-<label for="notesInput">Anything we should know? <small>(optional)</small></label><textarea id="notesInput" rows="2" placeholder="Less spicy, no onion, extra sauce..."></textarea></div>
-<div class="bill"><div><span>Food total</span><b>₹<span id="foodTotal">0</span></b></div><div id="parcelLine" hidden><span>Parcel charge</span><b>₹10</b></div><div class="grand"><span>Total</span><b>₹<span id="modalTotal">0</span></b></div></div>
-<button id="whatsappButton" class="whatsapp" type="button">🟢 <span>Place order on WhatsApp</span> →</button><p class="small">Your order opens in WhatsApp with all details ready to send.</p>
-</section></div>
+
+<button id="cartButton" class="cart-bar" hidden>
+  <div class="cart-bag">🛍<b id="cartCount">0</b></div>
+  <div class="cart-summary"><strong><span id="cartCountText">0</span> items</strong><small>View your cart</small></div>
+  <div class="cart-price">₹<span id="cartTotal">0</span></div>
+  <strong class="cart-view">View Cart <span>→</span></strong>
+</button>
+
+<div id="cartModal" class="modal" hidden>
+ <section class="sheet">
+  <div class="handle"></div>
+  <div class="sheet-head"><div><span class="kicker">YOUR ORDER</span><h2>Almost there ✨</h2></div><button id="closeCart" class="close">×</button></div>
+  <div class="progress"><i></i> Review your order</div>
+  <div id="cartItems"></div>
+  <div class="form-card">
+   <div class="order-note">🔢 <span><b>Order number is automatic</b><small>Today's next order number is generated when you place it.</small></span></div>
+   <label for="notesInput">Anything we should know? <small>(optional)</small></label>
+   <textarea id="notesInput" rows="2" placeholder="Less spicy, no onion, extra sauce..."></textarea>
+  </div>
+  <div class="bill"><div><span>Food total</span><b>₹<span id="foodTotal">0</span></b></div><div id="parcelLine" hidden><span>Parcel charge</span><b>₹10</b></div><div class="grand"><span>Total</span><b>₹<span id="modalTotal">0</span></b></div></div>
+  <button id="whatsappButton" class="whatsapp">Send Order on WhatsApp <span>→</span></button>
+  <p class="secure-note">🔒 Your order is sent securely to Food On Wheels</p>
+ </section>
+</div>
 <script src="script.js"></script>
-</body></html>
+</body>
+</html>

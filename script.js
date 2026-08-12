@@ -22,10 +22,17 @@ const $=s=>document.querySelector(s);
 const money=n=>Number(n).toLocaleString("en-IN");
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 
+const imageByCategory={
+ "Burger Combo":"assets/burger.jpg","Rolls Combo":"assets/roll.jpg","Sandwich Combo":"assets/burger2.jpg",
+ "French Fries":"assets/fries.jpg","Burgers":"assets/burger.jpg","Rolls":"assets/roll.jpg",
+ "Bread Omelette":"assets/burger2.jpg","Pav Bajji":"assets/popcorn.jpg","Starters":"assets/popcorn.jpg",
+ "Pizzas":"assets/pizza.jpg","Sandwich Menu":"assets/burger2.jpg","Devil Eggs":"assets/popcorn.jpg","Mojito's":"assets/drink.jpg"
+};
+const iconByCategory={"Burger Combo":"🔥","Rolls Combo":"🌯","Sandwich Combo":"🥪","French Fries":"🍟","Burgers":"🍔","Rolls":"🌯","Bread Omelette":"🍳","Pav Bajji":"🥘","Starters":"🍗","Pizzas":"🍕","Sandwich Menu":"🥪","Devil Eggs":"🥚","Mojito's":"🥤"};
+
 function normalize(){
  return menuData.map(cat=>({...cat,items:cat.items.map(([name,price])=>({
-  id:slug(cat.name+"-"+name),name,price,
-  diningOnly:cat.name.includes("Combo"),pizza:cat.name==="Pizzas"
+  id:slug(cat.name+"-"+name),name,price,diningOnly:cat.name.includes("Combo"),pizza:cat.name==="Pizzas",image:imageByCategory[cat.name]||"assets/burger.jpg"
  }))}));
 }
 const menu=normalize();
@@ -37,35 +44,29 @@ function renderAction(id){
  if(!el)return;
  el.innerHTML=q
   ? `<div class="qty"><button type="button" onclick="changeQty('${id}',-1)">−</button><b>${q}</b><button type="button" onclick="changeQty('${id}',1)">+</button></div>`
-  : `<button type="button" class="add" onclick="changeQty('${id}',1)">ADD</button>`;
+  : `<button type="button" class="add" onclick="changeQty('${id}',1)">ADD +</button>`;
 }
 
 function renderMenu(){
  const categories=$("#categories"),menuEl=$("#menu");
  if(!categories||!menuEl)return;
-
- categories.innerHTML=menu.map(c=>`<button type="button" class="chip" data-cat="${slug(c.name)}">${c.name}</button>`).join("");
-
+ categories.innerHTML=menu.map(c=>`<button type="button" class="chip" data-cat="${slug(c.name)}">${iconByCategory[c.name]||"🍴"} ${c.name}</button>`).join("");
  menuEl.innerHTML=menu.map(c=>`
   <section class="category" id="cat-${slug(c.name)}">
-   <div class="category-head"><div><span class="section-kicker">MENU</span><h2>${c.name}</h2></div><span class="category-count">${c.items.length} items</span></div>
+   <div class="category-head"><div><span class="kicker">${iconByCategory[c.name]||"🍴"} MENU</span><h2>${c.name}</h2></div><span class="category-count">${c.items.length} items</span></div>
    <div class="items-grid">
     ${c.items.map(i=>`
      <article class="item">
-      <div class="info">
-       <div class="item-badge">${c.name.includes("Combo")?"🔥 COMBO":c.name==="Mojito's"?"🥤 DRINK":"FAVOURITE"}</div>
-       <h3>${i.name}${i.diningOnly?'<span class="tag">DINING ONLY</span>':''}</h3>
-       <div class="price">₹${money(i.price)}</div>
+      <div class="item-photo" style="background-image:url('${i.image}')">
+       <span class="item-badge">${c.name.includes("Combo")?"🔥 BEST VALUE":c.name==="Mojito's"?"🥤 CHILLED":"★ FAVOURITE"}</span>
       </div>
+      <div class="info"><h3>${i.name}${i.diningOnly?'<span class="tag">DINING ONLY</span>':''}</h3><div class="price">₹${money(i.price)}</div></div>
       <div class="action" data-action="${i.id}"></div>
      </article>`).join("")}
    </div>
   </section>`).join("");
-
  allItems().forEach(i=>renderAction(i.id));
- categories.querySelectorAll(".chip").forEach(btn=>{
-  btn.addEventListener("click",()=>jump(btn.dataset.cat));
- });
+ categories.querySelectorAll(".chip").forEach(btn=>btn.addEventListener("click",()=>jump(btn.dataset.cat)));
 }
 
 function jump(id){
@@ -93,7 +94,7 @@ function totals(){
 function updateCart(){
  const t=totals(),btn=$("#cartButton");
  if(btn)btn.hidden=!t.count;
- if($("#cartCount"))$("#cartCount").textContent=t.count;
+ if($("#cartCount"))$("#cartCount").textContent=t.count; if($("#cartCountText")) $("#cartCountText").textContent=t.count;
  if($("#cartTotal"))$("#cartTotal").textContent=money(t.total);
  if($("#foodTotal"))$("#foodTotal").textContent=money(t.food);
  if($("#modalTotal"))$("#modalTotal").textContent=money(t.total);
