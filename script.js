@@ -42,37 +42,37 @@ function hashCode(str){
   return Math.abs(h);
 }
 
-// Each menu item gets its own photorealistic food-photo prompt + deterministic seed.
-// This avoids the old behaviour where unrelated items received the same stock image.
-function imagePrompt(category,name){
+// Real-food photography source. Every menu item gets a different deterministic
+// Flickr lock so the browser never intentionally reuses the same image URL.
+function imageKeywords(category,name){
   const n=name.toLowerCase();
-  let subject=name;
-  if(category.includes("Mojito")) subject=`${name} refreshing non-alcoholic mocktail, clear chilled glass, mint and lime garnish`;
-  else if(category.includes("Pizzas")) subject=`${name}, freshly baked pizza, melted cheese, appetizing toppings`;
-  else if(category.includes("French Fries")) subject=`${name}, golden crispy french fries, restaurant serving`;
-  else if(category.includes("Burgers")) subject=`${name}, gourmet fast-food burger, toasted bun, fresh lettuce and sauce`;
-  else if(category.includes("Rolls")) subject=`${name}, freshly grilled Indian-style roll wrap, sliced open to show filling`;
-  else if(category.includes("Sandwich")) subject=`${name}, toasted cafe sandwich, crisp bread and visible filling`;
-  else if(category.includes("Bread Omelette")) subject=`${name}, Indian bread omelette, golden egg and toasted bread`;
-  else if(category.includes("Pav Bajji")) subject=`${name}, Mumbai-style pav bhaji, buttered pav and spicy bhaji`;
-  else if(n.includes("lollipop")) subject=`${name}, crispy chicken lollipop appetizer, golden fried coating`;
-  else if(n.includes("nugget")) subject=`${name}, golden crispy cheese or chicken nuggets, restaurant appetizer`;
-  else if(n.includes("finger")) subject=`${name}, crispy fried finger-shaped starter, golden crunchy coating`;
-  else if(n.includes("popcorn")) subject=`${name}, crispy popcorn chicken or paneer bites, golden crunchy coating`;
-  else if(n.includes("devil egg")) subject=`${name}, crispy devil eggs, spicy masala coating, plated appetizer`;
-  else subject=`${name}, freshly prepared Indian fast-food restaurant dish`;
-
-  return `Professional commercial food photography of ${subject}. Real food, photorealistic, appetizing, natural texture, warm restaurant lighting, clean dark wooden table, shallow depth of field, centered single dish, no people, no text, no labels, no logo, no illustration, no cartoon, no emoji.`;
+  if(category.includes("Mojito")) return `${name},mocktail,drink,beverage,food photography`;
+  if(category.includes("Pizzas")) return `${name},pizza,food photography`;
+  if(category.includes("French Fries")) return `${name},french fries,food photography`;
+  if(category.includes("Burgers") || category.includes("Burger Combo")) return `${name},burger,food photography`;
+  if(category.includes("Rolls") || category.includes("Rolls Combo")) return `${name},chicken roll,wrap,food photography`;
+  if(category.includes("Sandwich")) return `${name},sandwich,food photography`;
+  if(category.includes("Bread Omelette")) return `${name},omelette,toast,food photography`;
+  if(category.includes("Pav Bajji")) return `${name},pav bhaji,indian food photography`;
+  if(n.includes("lollipop")) return `${name},chicken lollipop,indian food photography`;
+  if(n.includes("nugget")) return `${name},nuggets,crispy starter,food photography`;
+  if(n.includes("finger")) return `${name},crispy fingers,starter,food photography`;
+  if(n.includes("popcorn")) return `${name},popcorn chicken,paneer bites,food photography`;
+  if(n.includes("devil egg")) return `${name},devilled eggs,indian starter,food photography`;
+  return `${name},indian fast food,restaurant food photography`;
 }
 
 function imageUrl(category,name){
   const seed=10000+(hashCode(category+'|'+name)%900000);
-  const prompt=encodeURIComponent(imagePrompt(category,name));
-  return `https://image.pollinations.ai/prompt/${prompt}?model=flux&width=800&height=600&seed=${seed}&nologo=true&private=true`;
+  const query=encodeURIComponent(imageKeywords(category,name));
+  // Unlike the previous AI endpoint, this returns real photographic food images.
+  // The unique lock prevents the same source image URL from being reused.
+  return `https://loremflickr.com/760/560/${query}?lock=${seed}`;
 }
 
 function normalize(){
-  return menuData.map(cat=>({...cat,items:cat.items.map(([name,price])=>({
+  const ordered=[...menuData.filter(c=>!c.name.toLowerCase().includes("combo")),...menuData.filter(c=>c.name.toLowerCase().includes("combo"))];
+  return ordered.map(cat=>({...cat,items:cat.items.map(([name,price])=>({
     id:slug(cat.name+"-"+name),name,price,category:cat.name,
     diningOnly:cat.name.includes("Combo"),image:imageUrl(cat.name,name)
   }))}));
@@ -246,3 +246,16 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#cartModal").hi
 
 renderMenu();
 updateCart();
+
+
+function setupQr(){
+  const siteUrl=window.location.href.split('#')[0];
+  const qr=`https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data=${encodeURIComponent(siteUrl)}`;
+  const img=$("#siteQr"),link=$("#qrLink"),copy=$("#copyLinkButton");
+  if(img) img.src=qr;
+  if(link) link.href=siteUrl;
+  if(copy) copy.onclick=async()=>{
+    try{await navigator.clipboard.writeText(siteUrl);showToast("Menu link copied");}
+    catch(e){showToast(siteUrl)}
+  };
+}

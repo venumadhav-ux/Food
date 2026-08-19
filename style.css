@@ -126,3 +126,12 @@ textarea:focus{border-color:#111}
   .cart-sheet{padding-left:20px;padding-right:20px}
   .sheet-head h2{font-size:36px}
 }
+
+
+.qr-order-card{margin:34px 0 110px;padding:22px;border-radius:28px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;box-shadow:0 18px 45px rgba(0,0,0,.14)}
+.qr-order-card h2{margin:5px 0 7px;font-family:Outfit,sans-serif;font-size:25px}
+.qr-order-card p{margin:0 0 14px;color:#bdbdbd;line-height:1.45;font-size:14px;max-width:220px}
+.qr-order-card a{flex:0 0 auto;background:#fff;padding:8px;border-radius:18px;display:block}
+.qr-order-card img{display:block;width:112px;height:112px;border-radius:10px}
+.qr-link-btn{border:1px solid rgba(255,255,255,.2);background:#ff6b00;color:#fff;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
+@media(max-width:520px){.qr-order-card{padding:18px}.qr-order-card img{width:96px;height:96px}.qr-order-card h2{font-size:22px}}
