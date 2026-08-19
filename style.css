@@ -10,7 +10,8 @@ button{border:0;cursor:pointer}
 .app{max-width:760px;margin:auto;background:#fafaf8;min-height:100vh;padding-bottom:110px;overflow:hidden}
 .topbar{height:92px;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;background:#111;color:#fff;position:relative;z-index:4}
 .brand{display:flex;align-items:center;gap:13px}
-.brand-mark{width:58px;height:58px;border-radius:20px;background:var(--orange);display:grid;place-items:center;font-family:Outfit;font-weight:900;font-size:20px;box-shadow:0 10px 30px rgba(255,90,0,.25)}
+.brand-mark{width:58px;height:58px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 8px 28px rgba(255,255,255,.18)}
+.logo-mark img{width:100%;height:100%;object-fit:cover;display:block}
 .brand-title{font:900 28px/22px Outfit;letter-spacing:-1.2px}
 .brand-subtitle{font:800 14px/18px Outfit;color:#ff9b00;letter-spacing:2px}
 .open-pill{padding:12px 17px;border:1px solid #3b3b3b;border-radius:999px;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;background:#171717}
@@ -54,7 +55,7 @@ button{border:0;cursor:pointer}
 .category h2{font:900 27px Outfit;margin:0 0 14px;letter-spacing:-.7px}
 .item{display:grid;grid-template-columns:100px 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid #eee;border-radius:22px;padding:10px;margin:10px 0;box-shadow:0 8px 25px rgba(0,0,0,.045);transition:.2s}
 .item:active{transform:scale(.985)}
-.food-image{width:100px;height:92px;border-radius:17px;object-fit:cover;background:#eee;display:block}
+.food-image{width:100px;height:92px;border-radius:17px;object-fit:cover;background:linear-gradient(135deg,#f2eee9,#ddd7cf);display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
 .info h3{font:800 16px/1.18 Outfit;margin:0 0 7px}
 .price{font-weight:800;color:#111}
 .tag{display:inline-block;margin-left:6px;padding:3px 6px;border-radius:5px;background:#fff0e5;color:var(--orange);font:700 8px Outfit;vertical-align:middle}
@@ -92,7 +93,7 @@ button{border:0;cursor:pointer}
 .totals .grand{border-top:1px solid #ddd;margin-top:7px;padding-top:16px;font-size:24px}
 textarea{width:100%;min-height:105px;border:1px solid #ddd;border-radius:19px;padding:17px;font-size:16px;resize:none;outline:none;margin:15px 0}
 textarea:focus{border-color:#111}
-.parcel-note{background:#fff5e8;border-radius:13px;padding:10px 12px;font-size:12px;color:#8a5100;margin-bottom:12px}
+.parcel-note{background:#fff5e8;border-radius:13px;padding:10px 12px;font-size:12px;color:#8a5100;margin-bottom:12px}.charge-detail{color:#999;font-size:12px;font-weight:500;margin-left:5px}
 .whatsapp-btn{width:100%;background:#06bd60;color:#fff;border-radius:20px;padding:19px;display:flex;justify-content:center;gap:12px;align-items:center;font:800 17px Outfit}
 .whatsapp-btn:disabled{opacity:.65}
 .order-note{text-align:center;color:#888;font-size:11px;margin:10px 0 0}

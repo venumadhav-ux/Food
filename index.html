@@ -16,7 +16,7 @@
 
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark">FW</div>
+        <div class="brand-mark logo-mark"><img src="assets/chef-tejas-logo.png" alt="Chef Teja's Food On Wheels logo"></div>
         <div>
           <div class="brand-title">FOOD</div>
           <div class="brand-subtitle">ON WHEELS</div>
@@ -86,12 +86,12 @@
 
         <div class="totals">
           <div><span>Food total</span><b>₹<span id="foodTotal">0</span></b></div>
-          <div id="parcelLine" hidden><span>Parcel charge</span><b>₹10</b></div>
+          <div id="parcelLine" hidden><span>Parcel charge <small class="charge-detail" id="parcelChargeDetail"></small></span><b>₹<span id="parcelTotal">0</span></b></div>
           <div class="grand"><span>Total</span><b>₹<span id="modalTotal">0</span></b></div>
         </div>
 
         <textarea id="notesInput" placeholder="Special instructions (optional)" maxlength="250"></textarea>
-        <div id="parcelNote" class="parcel-note" hidden>🛍️ Parcel orders include a ₹10 packing charge.</div>
+        <div id="parcelNote" class="parcel-note" hidden>🛍️ Parcel packing is ₹10 per item. Dining-only combos must be removed before placing a parcel order.</div>
 
         <button class="whatsapp-btn" id="whatsappButton">
           <span>Send Order on WhatsApp</span><b>→</b>

@@ -42,40 +42,33 @@ function hashCode(str){
   return Math.abs(h);
 }
 
-function imageKeyword(category,name){
+// Each menu item gets its own photorealistic food-photo prompt + deterministic seed.
+// This avoids the old behaviour where unrelated items received the same stock image.
+function imagePrompt(category,name){
   const n=name.toLowerCase();
-  if(category.includes("pizza")) return n.includes("chicken")?"chicken pizza":n.includes("paneer")?"paneer pizza":n.includes("mushroom")?"mushroom pizza":"cheese pizza";
-  if(category.includes("burger")) return n.includes("chicken")?"crispy chicken burger":n.includes("paneer")?"paneer burger":n.includes("egg")?"egg burger":"veg burger";
-  if(category.includes("fries")) return n.includes("chicken")?"chicken loaded fries":n.includes("paneer")?"loaded fries":"french fries";
-  if(category.includes("mojito")) return n.includes("lemon")?"lemon soda":n.includes("strawberry")?"strawberry mojito":n.includes("blue")?"blue cocktail":"fruit mojito";
-  if(category.includes("lollipop")||n.includes("lollipop")) return "chicken lollipop";
-  if(n.includes("roll")) return n.includes("chicken")?"chicken roll":n.includes("paneer")?"paneer roll":"veg roll";
-  if(n.includes("sandwich")) return n.includes("chicken")?"chicken sandwich":n.includes("paneer")?"paneer sandwich":"sandwich";
-  if(n.includes("omelette")||n.includes("egg")) return "omelette";
-  if(n.includes("pav bajji")) return "pav bhaji";
-  if(n.includes("nugget")||n.includes("finger")||n.includes("popcorn")||n.includes("chicken")) return "crispy chicken starter";
-  return "indian street food";
+  let subject=name;
+  if(category.includes("Mojito")) subject=`${name} refreshing non-alcoholic mocktail, clear chilled glass, mint and lime garnish`;
+  else if(category.includes("Pizzas")) subject=`${name}, freshly baked pizza, melted cheese, appetizing toppings`;
+  else if(category.includes("French Fries")) subject=`${name}, golden crispy french fries, restaurant serving`;
+  else if(category.includes("Burgers")) subject=`${name}, gourmet fast-food burger, toasted bun, fresh lettuce and sauce`;
+  else if(category.includes("Rolls")) subject=`${name}, freshly grilled Indian-style roll wrap, sliced open to show filling`;
+  else if(category.includes("Sandwich")) subject=`${name}, toasted cafe sandwich, crisp bread and visible filling`;
+  else if(category.includes("Bread Omelette")) subject=`${name}, Indian bread omelette, golden egg and toasted bread`;
+  else if(category.includes("Pav Bajji")) subject=`${name}, Mumbai-style pav bhaji, buttered pav and spicy bhaji`;
+  else if(n.includes("lollipop")) subject=`${name}, crispy chicken lollipop appetizer, golden fried coating`;
+  else if(n.includes("nugget")) subject=`${name}, golden crispy cheese or chicken nuggets, restaurant appetizer`;
+  else if(n.includes("finger")) subject=`${name}, crispy fried finger-shaped starter, golden crunchy coating`;
+  else if(n.includes("popcorn")) subject=`${name}, crispy popcorn chicken or paneer bites, golden crunchy coating`;
+  else if(n.includes("devil egg")) subject=`${name}, crispy devil eggs, spicy masala coating, plated appetizer`;
+  else subject=`${name}, freshly prepared Indian fast-food restaurant dish`;
+
+  return `Professional commercial food photography of ${subject}. Real food, photorealistic, appetizing, natural texture, warm restaurant lighting, clean dark wooden table, shallow depth of field, centered single dish, no people, no text, no labels, no logo, no illustration, no cartoon, no emoji.`;
 }
 
 function imageUrl(category,name){
-  const keyword=encodeURIComponent(imageKeyword(category,name));
-  const lock=1000+(hashCode(category+"|"+name)%9000);
-  return `https://loremflickr.com/900/700/${keyword}?lock=${lock}`;
-}
-
-function fallbackEmoji(category,name){
-  const n=name.toLowerCase();
-  if(category==="Pizzas")return"🍕";
-  if(category==="Mojito's")return"🥤";
-  if(category==="French Fries")return"🍟";
-  if(n.includes("burger"))return"🍔";
-  if(n.includes("roll"))return"🌯";
-  if(n.includes("sandwich"))return"🥪";
-  if(n.includes("egg")||n.includes("omelette"))return"🍳";
-  if(n.includes("pizza"))return"🍕";
-  if(n.includes("lollipop"))return"🍗";
-  if(n.includes("chicken"))return"🍗";
-  return"🍽️";
+  const seed=10000+(hashCode(category+'|'+name)%900000);
+  const prompt=encodeURIComponent(imagePrompt(category,name));
+  return `https://image.pollinations.ai/prompt/${prompt}?model=flux&width=800&height=600&seed=${seed}&nologo=true&private=true`;
 }
 
 function normalize(){
@@ -104,7 +97,7 @@ function renderMenu(){
       <h2>${c.name}</h2>
       ${c.items.map(i=>`
         <div class="item">
-          <img class="food-image" loading="lazy" src="${i.image}" alt="${i.name}" onerror="this.onerror=null;this.src='${fallbackDataUri(fallbackEmoji(c.name,i.name))}'">
+          <img class="food-image" loading="lazy" src="${i.image}" alt="${i.name}" onerror="this.onerror=null;this.src='${fallbackDataUri()}'">
           <div class="info"><h3>${i.name}${i.diningOnly?'<span class="tag">DINING ONLY</span>':''}</h3><div class="price">₹${money(i.price)}</div></div>
           <div class="action" data-action="${i.id}"></div>
         </div>`).join("")}
@@ -112,9 +105,9 @@ function renderMenu(){
   allItems().forEach(i=>renderAction(i.id));
 }
 
-function fallbackDataUri(emoji){
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3eee8"/><text x="50%" y="55%" text-anchor="middle" font-size="105">${emoji}</text></svg>`;
-  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+function fallbackDataUri(){
+  // Never fall back to an emoji. If a remote food photo fails, use the real restaurant logo.
+  return "assets/chef-tejas-logo.png";
 }
 
 function jump(id){
@@ -141,7 +134,7 @@ function totals(){
     const i=item(id);
     if(i){count+=q;food+=q*i.price}
   });
-  const parcel=orderType==="parcel"&&count>0?10:0;
+  const parcel=orderType==="parcel"&&count>0?count*10:0;
   return{count,food,parcel,total:food+parcel};
 }
 
@@ -154,6 +147,8 @@ function updateCart(){
   $("#foodTotal").textContent=money(t.food);
   $("#modalTotal").textContent=money(t.total);
   $("#parcelLine").hidden=!t.parcel;
+  $("#parcelTotal").textContent=money(t.parcel);
+  $("#parcelChargeDetail").textContent=t.parcel?`(₹10 × ${t.count})`:"";
 }
 
 function renderCart(){
@@ -175,9 +170,11 @@ function setType(type){
   document.querySelectorAll(".type").forEach(b=>b.classList.toggle("active",b.dataset.type===type));
   $("#parcelNote").hidden=type!=="parcel";
   if(type==="parcel"){
-    Object.keys(cart).forEach(id=>{if(item(id)?.diningOnly)delete cart[id]});
+    // Never clear the customer's cart when switching between Dining and Parcel.
+    // Dining-only items remain visible so nothing the customer selected is lost.
     allItems().forEach(i=>renderAction(i.id));
-    if(Object.keys(cart).length===0)showToast("Parcel mode selected");
+    if(Object.keys(cart).length) renderCart();
+    else showToast("Parcel mode selected");
   }
   updateCart();renderCart();
 }
@@ -187,6 +184,13 @@ async function sendWhatsApp(){
   if(!t.count){showToast("Add at least one item first.");return}
 
   const notes=$("#notesInput").value.trim();
+  if(orderType==="parcel") {
+    const diningOnlyItems=Object.entries(cart).filter(([id])=>item(id)?.diningOnly);
+    if(diningOnlyItems.length){
+      showToast("Remove dining-only combos before placing a parcel order.");
+      return;
+    }
+  }
   const items=Object.entries(cart).map(([id,q])=>{
     const i=item(id);
     return{name:i.name,quantity:q,unitPrice:i.price,lineTotal:i.price*q};
@@ -209,13 +213,13 @@ async function sendWhatsApp(){
     try{data=await response.json()}catch{}
     if(!response.ok||!data.orderNumber)throw new Error(data.error||"Could not create order");
 
-    let msg=`🍽️ *FOOD ON WHEELS*\\n\\n🔢 *ORDER #${data.orderNumber}*\\n📦 Type: ${orderType==="dining"?"Dining":"Parcel"}\\n\\n`;
-    items.forEach(i=>{msg+=`• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\\n`});
-    msg+=`\\n💰 Food total: ₹${t.food}`;
-    if(t.parcel)msg+=`\\n📦 Parcel charge: ₹10`;
-    msg+=`\\n💵 *TOTAL: ₹${t.total}*`;
-    if(notes)msg+=`\\n\\n📝 *Special instructions:* ${notes}`;
-    msg+=`\\n\\nPlease prepare the order.`;
+    let msg=`🍽️ *FOOD ON WHEELS*\n\n🔢 *ORDER #${data.orderNumber}*\n📦 Type: ${orderType==="dining"?"Dining":"Parcel"}\n\n`;
+    items.forEach(i=>{msg+=`• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\n`});
+    msg+=`\n💰 Food total: ₹${t.food}`;
+    if(t.parcel)msg+=`\n📦 Parcel charge: ₹10 × ${t.count} item${t.count===1?"":"s"} = ₹${t.parcel}`;
+    msg+=`\n💵 *TOTAL: ₹${t.total}*`;
+    if(notes)msg+=`\n\n📝 *Special instructions:* ${notes}`;
+    msg+=`\n\nPlease prepare the order.`;
 
     window.location.href=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   }catch(err){
