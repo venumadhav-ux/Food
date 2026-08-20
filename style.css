@@ -135,3 +135,6 @@ textarea:focus{border-color:#111}
 .qr-order-card img{display:block;width:112px;height:112px;border-radius:10px}
 .qr-link-btn{border:1px solid rgba(255,255,255,.2);background:#ff6b00;color:#fff;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
 @media(max-width:520px){.qr-order-card{padding:18px}.qr-order-card img{width:96px;height:96px}.qr-order-card h2{font-size:22px}}
+
+.food-image.image-failed{background:linear-gradient(135deg,#1a1a1a,#2b2118);object-fit:contain;padding:22px;opacity:.75}
+.food-image.image-failed::after{content:"Food photo"}

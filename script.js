@@ -37,44 +37,65 @@ const money=n=>Number(n).toLocaleString("en-IN");
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 
 function hashCode(str){
-  let h=0;
-  for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i)|0;
-  return Math.abs(h);
+  let h=2166136261;
+  for(let i=0;i<str.length;i++){
+    h^=str.charCodeAt(i);
+    h=Math.imul(h,16777619);
+  }
+  return h>>>0;
 }
 
-// Real-food photography source. Every menu item gets a different deterministic
-// Flickr lock so the browser never intentionally reuses the same image URL.
+// Every item gets its own deterministic photo URL and lock.
+// The lock is based on the full category + item name, so different menu items
+// do not intentionally point at the same photo.
 function imageKeywords(category,name){
   const n=name.toLowerCase();
-  if(category.includes("Mojito")) return `${name},mocktail,drink,beverage,food photography`;
-  if(category.includes("Pizzas")) return `${name},pizza,food photography`;
-  if(category.includes("French Fries")) return `${name},french fries,food photography`;
-  if(category.includes("Burgers") || category.includes("Burger Combo")) return `${name},burger,food photography`;
-  if(category.includes("Rolls") || category.includes("Rolls Combo")) return `${name},chicken roll,wrap,food photography`;
-  if(category.includes("Sandwich")) return `${name},sandwich,food photography`;
-  if(category.includes("Bread Omelette")) return `${name},omelette,toast,food photography`;
-  if(category.includes("Pav Bajji")) return `${name},pav bhaji,indian food photography`;
-  if(n.includes("lollipop")) return `${name},chicken lollipop,indian food photography`;
-  if(n.includes("nugget")) return `${name},nuggets,crispy starter,food photography`;
-  if(n.includes("finger")) return `${name},crispy fingers,starter,food photography`;
-  if(n.includes("popcorn")) return `${name},popcorn chicken,paneer bites,food photography`;
-  if(n.includes("devil egg")) return `${name},devilled eggs,indian starter,food photography`;
-  return `${name},indian fast food,restaurant food photography`;
+  if(category.includes("Mojito")) return "mojito,mocktail,drink,beverage";
+  if(category.includes("Pizzas")) return "pizza,italian-food";
+  if(category.includes("French Fries")) return "french-fries,crispy-potato";
+  if(category.includes("Burgers") || category.includes("Burger Combo")) return "burger,cheeseburger";
+  if(category.includes("Rolls") || category.includes("Rolls Combo")) return "wrap,roll,shawarma";
+  if(category.includes("Sandwich")) return "sandwich,toast";
+  if(category.includes("Bread Omelette")) return "omelette,egg-toast";
+  if(category.includes("Pav Bajji")) return "pav-bhaji,indian-food";
+  if(n.includes("lollipop")) return "chicken-lollipop,fried-chicken";
+  if(n.includes("nugget")) return "chicken-nuggets,crispy-chicken";
+  if(n.includes("finger")) return "chicken-fingers,crispy-chicken";
+  if(n.includes("popcorn")) return "popcorn-chicken,fried-chicken";
+  if(n.includes("devil egg")) return "deviled-eggs,egg-starter";
+  if(n.includes("paneer")) return "paneer,indian-starter";
+  return "indian-fast-food,restaurant-food";
 }
 
-function imageUrl(category,name){
-  const seed=10000+(hashCode(category+'|'+name)%900000);
-  const query=encodeURIComponent(imageKeywords(category,name));
-  // Unlike the previous AI endpoint, this returns real photographic food images.
-  // The unique lock prevents the same source image URL from being reused.
-  return `https://loremflickr.com/760/560/${query}?lock=${seed}`;
+function imageUrl(category,name,variant=0){
+  const lock=1+(hashCode(category+'|'+name+'|'+variant)%999999);
+  const query=imageKeywords(category,name);
+  return `https://loremflickr.com/760/560/${query}?lock=${lock}`;
+}
+
+function imageMarkup(i){
+  const primary=imageUrl(i.category,i.name,0);
+  const retry=imageUrl(i.category,i.name,1);
+  return `<img class="food-image" loading="lazy" decoding="async" src="${primary}" alt="${i.name}" data-retry="${retry}" onerror="retryFoodImage(this)">`;
+}
+
+function retryFoodImage(img){
+  if(img.dataset.retried!=="1"){
+    img.dataset.retried="1";
+    img.src=img.dataset.retry;
+    return;
+  }
+  img.onerror=null;
+  img.classList.add("image-failed");
+  img.removeAttribute("src");
+  img.setAttribute("aria-label","Food photo unavailable");
 }
 
 function normalize(){
   const ordered=[...menuData.filter(c=>!c.name.toLowerCase().includes("combo")),...menuData.filter(c=>c.name.toLowerCase().includes("combo"))];
   return ordered.map(cat=>({...cat,items:cat.items.map(([name,price])=>({
     id:slug(cat.name+"-"+name),name,price,category:cat.name,
-    diningOnly:cat.name.includes("Combo"),image:imageUrl(cat.name,name)
+    diningOnly:cat.name.includes("Combo"),image:imageUrl(cat.name,name,0)
   }))}));
 }
 const menu=normalize();
@@ -97,7 +118,7 @@ function renderMenu(){
       <h2>${c.name}</h2>
       ${c.items.map(i=>`
         <div class="item">
-          <img class="food-image" loading="lazy" src="${i.image}" alt="${i.name}" onerror="this.onerror=null;this.src='${fallbackDataUri()}'">
+          ${imageMarkup(i)}
           <div class="info"><h3>${i.name}${i.diningOnly?'<span class="tag">DINING ONLY</span>':''}</h3><div class="price">₹${money(i.price)}</div></div>
           <div class="action" data-action="${i.id}"></div>
         </div>`).join("")}
@@ -105,10 +126,6 @@ function renderMenu(){
   allItems().forEach(i=>renderAction(i.id));
 }
 
-function fallbackDataUri(){
-  // Never fall back to an emoji. If a remote food photo fails, use the real restaurant logo.
-  return "assets/chef-tejas-logo.png";
-}
 
 function jump(id){
   document.getElementById("cat-"+id)?.scrollIntoView({behavior:"smooth",block:"start"});
@@ -249,7 +266,7 @@ updateCart();
 
 
 function setupQr(){
-  const siteUrl=window.location.href.split('#')[0];
+  const siteUrl="https://food-olive-kappa.vercel.app/";
   const qr=`https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data=${encodeURIComponent(siteUrl)}`;
   const img=$("#siteQr"),link=$("#qrLink"),copy=$("#copyLinkButton");
   if(img) img.src=qr;
