@@ -37,9 +37,9 @@ const D = [
   ]],
   ['Bread Omelette', [
     ['Bread Omelette', 70, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80'],
-    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80']
+    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Pav Bajji', [
     ['Mushroom Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
@@ -53,7 +53,7 @@ const D = [
     ['Paneer Popcorn (100gms)', 119, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Fingers (6)', 119, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
     ['Cheese Corn Nuggets (6)', 99, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Nuggets (6)', 89, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
+    ['Chicken Nuggets (6)', 89, 'https://images.unsplash.com/photo-1585325701165-351af916e581?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Fingers (6)', 99, 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Cheese Balls (6)', 110, 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Popcorn (130gms)', 120, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
@@ -105,11 +105,11 @@ const D = [
   ]],
   ['Rolls Combo', [
     ['Veg Roll + Fries + Mojito + 2 Fingers', 170, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Roll + Mojito or Fries', 160, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
+    ['Paneer Roll + Mojito or Fries', 160, 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80'],
     ['Egg Roll + Fries + Mojito', 170, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Roll + Fries or Mojito', 160, 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Roll + Fries + Mojito + 2pcs Chicken Lollipop', 210, 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80'],
-    ['Popcorn Chicken Roll + Mojito', 200, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80']
+    ['Popcorn Chicken Roll + Mojito', 200, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Sandwich Combo', [
     ['Mix Veg Sandwich + Fries + Mojito + Cheese & Corn Nuggets (3pcs)', 190, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
@@ -143,6 +143,12 @@ function toggleCategory(catId) {
 }
 
 function openAndScroll(catId) {
+  document.querySelectorAll('.category-dropdown').forEach(dropdown => {
+    if (dropdown.id !== catId) {
+      dropdown.classList.remove('open');
+    }
+  });
+
   const el = document.getElementById(catId);
   if (el) {
     el.classList.add('open');
@@ -165,11 +171,11 @@ function render() {
   categories.innerHTML = menu.map(c => `<button class="chip" onclick="openAndScroll('c-${slug(c.name)}')">${c.name}</button>`).join('');
 
   let menuEl = '';
-  menu.forEach((c, idx) => {
+  menu.forEach((c) => {
     const catId = `c-${slug(c.name)}`;
-    const isOpen = idx === 0 ? 'open' : ''; // First category open by default
+    // Closed by default
     menuEl += `
-      <div class="category-dropdown ${isOpen}" id="${catId}">
+      <div class="category-dropdown" id="${catId}">
         <button class="category-header" onclick="toggleCategory('${catId}')">
           <div class="category-header-title">
             <span>${c.name}</span>
