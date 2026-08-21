@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Order counter is not configured." });
     }
 
-    // India calendar date. A new Redis key automatically starts at 1 each day.
+    // India calendar date (YYYY-MM-DD). Creates a unique key per day.
     const date = new Intl.DateTimeFormat("en-CA", {
       timeZone: "Asia/Kolkata",
       year: "numeric",
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     const key = `fow:order-counter:${date}`;
 
-    // Redis INCR is atomic, so simultaneous customers cannot receive the same number.
+    // Redis INCR is atomic; simultaneous customers will never get duplicate numbers.
     const response = await fetch(`${url}/incr/${encodeURIComponent(key)}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` }
@@ -39,6 +39,12 @@ export default async function handler(req, res) {
 
     const result = await response.json();
     const orderNumber = Number(result.result);
+
+    // Optional: Set key expiry to 48 hours to clean up old counters automatically
+    await fetch(`${url}/expire/${encodeURIComponent(key)}/172800`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` }
+    }).catch(() => {});
 
     return res.status(200).json({
       orderNumber,
