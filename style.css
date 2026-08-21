@@ -5,7 +5,13 @@ body{margin:0;background:#f7f7f5;color:#111;font-family:"DM Sans",sans-serif;pad
 .brand-logo{width:48px;height:48px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid #ff5a00;flex-shrink:0}
 .brand strong{font:800 18px/1.1 "Plus Jakarta Sans";display:block}
 .brand small{display:block;color:#ffad00;font:800 10px "DM Sans";letter-spacing:1.5px;margin-top:2px}
-.open{border:1px solid #444;border-radius:30px;padding:8px 14px;font-weight:700;font-size:13px}
+
+.header-actions{display:flex;align-items:center;gap:8px}
+.ig-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;transition:transform .2s ease}
+.ig-btn svg{width:18px;height:18px}
+.ig-btn:active{transform:scale(0.92)}
+
+.open{border:1px solid #444;border-radius:30px;padding:7px 12px;font-weight:700;font-size:12px}
 .open:first-letter{color:#00d46a}
 
 .hero{height:560px;border-radius:0 0 36px 36px;background:linear-gradient(90deg,#000d,#0004),url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85') center/cover;color:#fff;display:flex;align-items:center}
@@ -23,8 +29,6 @@ body{margin:0;background:#f7f7f5;color:#111;font-family:"DM Sans",sans-serif;pad
 .type span{font-size:15px}
 .type b,.type small{display:block}
 .type small{font-size:12px;color:#888}
-
-.sheet>small{letter-spacing:3px;color:#999;font-weight:700}
 
 main{padding:0 18px}
 
@@ -47,6 +51,16 @@ main{padding:0 18px}
 .qty{background:#ff5a00;color:#fff;border-radius:13px;padding:5px 7px;display:flex;align-items:center;gap:6px}
 .qty button,.row button{border:0;background:#fff;color:#111;border-radius:8px;width:26px;height:26px;font-size:16px;cursor:pointer}
 
+.social-footer{padding:25px 18px 10px;text-align:center}
+.footer-card{background:#111216;color:#fff;border-radius:24px;padding:24px 18px;border:1px solid #242730}
+.footer-card h3{margin:0 0 6px;font-family:"Plus Jakarta Sans";font-size:18px}
+.footer-card p{color:#888;font-size:13px;margin:0 0 16px}
+.footer-contacts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.social-link{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:14px;font-weight:700;font-size:13px;text-decoration:none;color:#fff;transition:transform .2s ease}
+.social-link:active{transform:scale(0.95)}
+.ig-link{background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)}
+.phone-link{background:#22252c;border:1px solid #333}
+
 .cartbar{position:fixed;z-index:30;left:18px;right:18px;bottom:15px;background:#111;color:#fff;border-radius:27px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 15px 40px #0005}
 .cartbar[hidden]{display:none !important}
 .cartbar div{flex:1}
@@ -56,6 +70,7 @@ main{padding:0 18px}
 .modal{position:fixed;z-index:100;inset:0;background:#0008;display:flex;align-items:flex-end}
 .modal[hidden]{display:none !important}
 .sheet{width:100%;max-height:88vh;overflow-y:auto;background:#fff;border-radius:30px 30px 0 0;padding:26px 20px}
+.sheet>small{letter-spacing:3px;color:#999;font-weight:700}
 .x{float:right;border:0;background:#eee;border-radius:50%;width:40px;height:40px;font-size:22px;cursor:pointer}
 .sheet h2{font:800 30px "Plus Jakarta Sans";margin-top:5px}
 .cartrow{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee}
