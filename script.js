@@ -142,20 +142,6 @@ function toggleCategory(catId) {
   if (el) el.classList.toggle('open');
 }
 
-function openAndScroll(catId) {
-  document.querySelectorAll('.category-dropdown').forEach(dropdown => {
-    if (dropdown.id !== catId) {
-      dropdown.classList.remove('open');
-    }
-  });
-
-  const el = document.getElementById(catId);
-  if (el) {
-    el.classList.add('open');
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
 function action(id) {
   let e = document.querySelector(`[data-a="${id}"]`);
   let q = cart[id] || 0;
@@ -167,9 +153,6 @@ function action(id) {
 }
 
 function render() {
-  const categories = document.getElementById('categories');
-  categories.innerHTML = menu.map(c => `<button class="chip" onclick="openAndScroll('c-${slug(c.name)}')">${c.name}</button>`).join('');
-
   let menuEl = '';
   menu.forEach((c) => {
     const catId = `c-${slug(c.name)}`;
@@ -289,15 +272,55 @@ const whatsappButton = document.getElementById('whatsappButton');
 const notesInput = document.getElementById('notesInput');
 
 whatsappButton.onclick = async () => {
-  let t = totals();
-  if (!t.count) return alert('Please add at least one item.');
-  
-  let items = Object.entries(cart).map(([id, q]) => {
-    let i = get(id);
-    return { name: i.name, quantity: q, lineTotal: i.price * q };
+  const t = totals();
+  if (!t.count) return alert("Please add at least one item.");
+
+  const items = Object.entries(cart).map(([id, q]) => {
+    const item = get(id);
+    return { name: item.name, quantity: q, lineTotal: item.price * q };
   });
 
-  let orderNum = Math.floor(1000 + Math.random() * 9000);
+  whatsappButton.disabled = true;
+  whatsappButton.textContent = "Generating Order...";
+
+  let orderNum = null;
+
+  try {
+    const res = await fetch("/api/order-number", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items,
+        orderType: orderType === "dining" ? "Dining" : "Parcel"
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      orderNum = data.orderNumber;
+    }
+  } catch (err) {
+    console.error("API error, falling back to local counter:", err);
+  }
+
+  // Fallback to local daily counter if API/Redis is unavailable
+  if (!orderNum) {
+    const today = new Date().toISOString().split("T")[0];
+    const lastDate = localStorage.getItem("last_order_date");
+    let count = parseInt(localStorage.getItem("daily_order_count") || "0", 10);
+    if (lastDate !== today) {
+      count = 1;
+      localStorage.setItem("last_order_date", today);
+    } else {
+      count += 1;
+    }
+    localStorage.setItem("daily_order_count", count.toString());
+    orderNum = count;
+  }
+
+  whatsappButton.disabled = false;
+  whatsappButton.textContent = "Send Order on WhatsApp →";
+
   let msg = `🍽️ *CHEF TEJA'S FOOD ON WHEELS*\n\n🔢 *ORDER #${orderNum}*\n📦 *Type:* ${orderType === 'dining' ? 'Dining' : 'Parcel'}\n\n`;
   items.forEach(i => {
     msg += `• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\n`;
