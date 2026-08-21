@@ -37,9 +37,9 @@ const D = [
   ]],
   ['Bread Omelette', [
     ['Bread Omelette', 70, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80'],
-    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80']
+    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Pav Bajji', [
     ['Mushroom Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
@@ -105,7 +105,7 @@ const D = [
   ]],
   ['Rolls Combo', [
     ['Veg Roll + Fries + Mojito + 2 Fingers', 170, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Roll + Mojito or Fries', 160, 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80'],
+    ['Paneer Roll + Mojito or Fries', 160, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
     ['Egg Roll + Fries + Mojito', 170, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Roll + Fries or Mojito', 160, 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Roll + Fries + Mojito + 2pcs Chicken Lollipop', 210, 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80'],
@@ -120,7 +120,6 @@ const D = [
 ];
 
 const fallbackPlaceholder = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=500&q=80';
-
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const money = n => Number(n).toLocaleString('en-IN');
 
@@ -138,6 +137,19 @@ const menu = D.map(c => ({
 const all = () => menu.flatMap(c => c.items);
 const get = id => all().find(i => i.id === id);
 
+function toggleCategory(catId) {
+  const el = document.getElementById(catId);
+  if (el) el.classList.toggle('open');
+}
+
+function openAndScroll(catId) {
+  const el = document.getElementById(catId);
+  if (el) {
+    el.classList.add('open');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 function action(id) {
   let e = document.querySelector(`[data-a="${id}"]`);
   let q = cart[id] || 0;
@@ -150,23 +162,35 @@ function action(id) {
 
 function render() {
   const categories = document.getElementById('categories');
-  categories.innerHTML = menu.map(c => `<button class="chip" onclick="document.getElementById('c-${slug(c.name)}').scrollIntoView({behavior:'smooth'})">${c.name}</button>`).join('');
+  categories.innerHTML = menu.map(c => `<button class="chip" onclick="openAndScroll('c-${slug(c.name)}')">${c.name}</button>`).join('');
 
   let menuEl = '';
-  menu.forEach(c => {
-    menuEl += `<section class="category" id="c-${slug(c.name)}">
-      <h2>${c.name}</h2>
-      ${c.items.map(i => `
-        <div class="item">
-          <img class="food-img" src="${i.image}" alt="${i.name}" loading="lazy" onerror="this.src='${fallbackPlaceholder}'">
-          <div class="info">
-            <h3>${i.name}${i.diningOnly ? '<span class="tag">DINING ONLY</span>' : ''}</h3>
-            <div class="price">₹${money(i.price)}</div>
+  menu.forEach((c, idx) => {
+    const catId = `c-${slug(c.name)}`;
+    const isOpen = idx === 0 ? 'open' : ''; // First category open by default
+    menuEl += `
+      <div class="category-dropdown ${isOpen}" id="${catId}">
+        <button class="category-header" onclick="toggleCategory('${catId}')">
+          <div class="category-header-title">
+            <span>${c.name}</span>
+            <span class="category-count">${c.items.length} items</span>
           </div>
-          <div data-a="${i.id}"></div>
+          <span class="category-icon">▼</span>
+        </button>
+        <div class="category-items">
+          ${c.items.map(i => `
+            <div class="item">
+              <img class="food-img" src="${i.image}" alt="${i.name}" loading="lazy" onerror="this.src='${fallbackPlaceholder}'">
+              <div class="info">
+                <h3>${i.name}${i.diningOnly ? '<span class="tag">DINING ONLY</span>' : ''}</h3>
+                <div class="price">₹${money(i.price)}</div>
+              </div>
+              <div data-a="${i.id}"></div>
+            </div>
+          `).join('')}
         </div>
-      `).join('')}
-    </section>`;
+      </div>
+    `;
   });
 
   document.getElementById('menu').innerHTML = menuEl;
@@ -269,7 +293,7 @@ whatsappButton.onclick = async () => {
   });
 
   let orderNum = Math.floor(1000 + Math.random() * 9000);
-  let msg = `🍽️ *FOOD ON WHEELS*\n\n🔢 *ORDER #${orderNum}*\n📦 *Type:* ${orderType === 'dining' ? 'Dining' : 'Parcel'}\n\n`;
+  let msg = `🍽️ *CHEF TEJA'S FOOD ON WHEELS*\n\n🔢 *ORDER #${orderNum}*\n📦 *Type:* ${orderType === 'dining' ? 'Dining' : 'Parcel'}\n\n`;
   items.forEach(i => {
     msg += `• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\n`;
   });
