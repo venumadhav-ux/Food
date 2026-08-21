@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "919010185837";
+const WHATSAPP_NUMBER = "919603696669";
 const PARCEL_FEE_PER_ITEM = 10;
 let orderType = "dining";
 let cart = {};
