@@ -17,18 +17,14 @@ body{margin:0;background:#f7f7f5;color:#111;font-family:"DM Sans",sans-serif;pad
 .hero button{display:flex;justify-content:space-between;width:270px;margin-top:24px;border:0;border-radius:20px;padding:16px 22px;background:#ff5a00;color:#fff;font-size:17px;font-weight:800;cursor:pointer}
 .hero label{display:block;margin-top:22px;font-size:14px}
 
-.types{position:relative;margin:-28px 18px 0;background:#fff;border-radius:26px;padding:8px;display:flex;gap:8px;box-shadow:0 15px 35px #0002}
+.types{position:relative;margin:-28px 18px 24px;background:#fff;border-radius:26px;padding:8px;display:flex;gap:8px;box-shadow:0 15px 35px #0002}
 .type{flex:1;border:0;border-radius:20px;padding:12px 14px;background:#f0f0ee;text-align:left;font-size:22px;display:flex;gap:10px;align-items:center;cursor:pointer}
 .type.active{background:#fff3e8;outline:2px solid #ff7b2b}
 .type span{font-size:15px}
 .type b,.type small{display:block}
 .type small{font-size:12px;color:#888}
 
-.explore{padding:35px 18px 5px}
-.explore>small, .sheet>small{letter-spacing:3px;color:#999;font-weight:700}
-.explore h2{font:800 28px "Plus Jakarta Sans";margin:8px 0}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:8px 0 16px}
-.chip{white-space:nowrap;border:1px solid #ddd;background:#fff;border-radius:30px;padding:10px 16px;font-weight:700;cursor:pointer}
+.sheet>small{letter-spacing:3px;color:#999;font-weight:700}
 
 main{padding:0 18px}
 
