@@ -19,11 +19,11 @@ const D = [
   ['Rolls', [
     ['Veg Roll', 70, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Roll', 100, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Roll', 75, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Roll', 100, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy Chicken Roll', 110, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
-    ['Popcorn Chicken Roll', 100, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
-    ['SPL Chicken Roll', 120, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80']
+    ['Egg Roll', 75, 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Roll', 100, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
+    ['Crispy Chicken Roll', 110, 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'],
+    ['Popcorn Chicken Roll', 100, 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80'],
+    ['SPL Chicken Roll', 120, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80']
   ]],
   ['French Fries', [
     ['Mini Fries', 49, 'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=80'],
@@ -37,30 +37,30 @@ const D = [
   ]],
   ['Bread Omelette', [
     ['Bread Omelette', 70, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80'],
-    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
+    ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1586816001966-79b736744398?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Pav Bajji', [
     ['Mushroom Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Pav Bajji', 129, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Pav Bajji', 129, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Pav Bajji', 149, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80']
+    ['Paneer Pav Bajji', 129, 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Pav Bajji', 110, 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=500&q=80'],
+    ['Chicken Pav Bajji', 129, 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=500&q=80'],
+    ['Egg Chicken Pav Bajji', 149, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Starters', [
     ['Veg Fingers (6)', 79, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Popcorn (100gms)', 119, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Fingers (6)', 119, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
+    ['Paneer Popcorn (100gms)', 119, 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=500&q=80'],
+    ['Paneer Fingers (6)', 119, 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=500&q=80'],
     ['Cheese Corn Nuggets (6)', 99, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Nuggets (6)', 89, 'https://images.unsplash.com/photo-1585325701165-351af916e581?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Fingers (6)', 99, 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Cheese Balls (6)', 110, 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Popcorn (130gms)', 120, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
+    ['Chicken Popcorn (130gms)', 120, 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Lollipop (5)', 110, 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Lollipop (Kabab Style)', 110, 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy Chicken Chips', 139, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy Chicken Fries', 139, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80']
+    ['Chicken Lollipop (Kabab Style)', 110, 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=500&q=80'],
+    ['Crispy Chicken Chips', 139, 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'],
+    ['Crispy Chicken Fries', 139, 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Pizzas', [
     ['Cheese Blast', 99, 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80'],
@@ -173,7 +173,6 @@ function render() {
   let menuEl = '';
   menu.forEach((c) => {
     const catId = `c-${slug(c.name)}`;
-    // Closed by default
     menuEl += `
       <div class="category-dropdown" id="${catId}">
         <button class="category-header" onclick="toggleCategory('${catId}')">
