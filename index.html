@@ -1,1 +1,73 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ff5a00"><title>Food On Wheels</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><header class="top"><div class="brand"><b>FW</b><strong>FOOD <small>ON WHEELS</small></strong></div><span class="open">● OPEN</span></header><section class="hero"><div><p>🔥 FRESH. HOT. MADE FOR YOU.</p><h1>What are you<br><em>craving today?</em></h1><span>Delicious meals • Fast service • Made with love</span><button onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Start Ordering <i>→</i></button><label>⭐ 4.8 ★ &nbsp; Loved by 500+ customers</label></div></section><div class="types"><button class="type active" data-type="dining">🍽️ <span><b>Dining</b><small>Enjoy at our place</small></span></button><button class="type" data-type="parcel">🛍️ <span><b>Parcel</b><small>Take it with you</small></span></button></div><section class="explore"><small>EXPLORE</small><h2>Choose your favourites</h2><div id="categories" class="chips"></div></section><main id="menu"></main><div id="cartBar" class="cartbar" hidden><div>🛍️ <b><span id="cartCount">0</span> items</b><small>View your cart</small></div><strong>₹<span id="cartTotal">0</span></strong><button onclick="openCart()">View Cart →</button></div><div id="cartModal" class="modal" hidden><div class="sheet"><button class="x" onclick="closeCart()">×</button><small>YOUR ORDER</small><h2>Your Cart</h2><div id="cartItems"></div><div class="totals"><p>Food total <b>₹<span id="foodTotal">0</span></b></p><p id="parcelLine">Parcel charge <b>₹<span id="parcelTotal">0</span></b></p><hr><p>Total <b>₹<span id="modalTotal">0</span></b></p></div><textarea id="notesInput" placeholder="Special instructions (optional)"></textarea><button id="whatsappButton" class="wa">Send Order on WhatsApp →</button></div></div><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ff5a00">
+  <title>Food On Wheels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <b>FW</b>
+      <strong>FOOD <small>ON WHEELS</small></strong>
+    </div>
+    <span class="open">● OPEN</span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <p>🔥 FRESH. HOT. MADE FOR YOU.</p>
+      <h1>What are you<br><em>craving today?</em></h1>
+      <span>Delicious meals • Fast service • Made with love</span>
+      <button onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Start Ordering <i>→</i></button>
+      <label>⭐ 4.8 ★ &nbsp; Loved by 500+ customers</label>
+    </div>
+  </section>
+
+  <div class="types">
+    <button class="type active" data-type="dining">🍽️ <span><b>Dining</b><small>Enjoy at our place</small></span></button>
+    <button class="type" data-type="parcel">🛍️ <span><b>Parcel</b><small>Take it with you</small></span></button>
+  </div>
+
+  <section class="explore">
+    <small>EXPLORE</small>
+    <h2>Choose your favourites</h2>
+    <div id="categories" class="chips"></div>
+  </section>
+
+  <main id="menu"></main>
+
+  <div id="cartBar" class="cartbar" hidden>
+    <div>
+      🛍️ <b><span id="cartCount">0</span> items</b>
+      <small>View your cart</small>
+    </div>
+    <strong>₹<span id="cartTotal">0</span></strong>
+    <button onclick="openCart()">View Cart →</button>
+  </div>
+
+  <div id="cartModal" class="modal" hidden>
+    <div class="sheet">
+      <button class="x" onclick="closeCart()">×</button>
+      <small>YOUR ORDER</small>
+      <h2>Your Cart</h2>
+      <div id="cartItems"></div>
+      <div class="totals">
+        <p>Food total <b>₹<span id="foodTotal">0</span></b></p>
+        <p id="parcelLine">Parcel charge <b>₹<span id="parcelTotal">0</span></b></p>
+        <hr>
+        <p>Total <b>₹<span id="modalTotal">0</span></b></p>
+      </div>
+      <textarea id="notesInput" placeholder="Special instructions (optional)"></textarea>
+      <button id="whatsappButton" class="wa">Send Order on WhatsApp →</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
