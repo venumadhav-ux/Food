@@ -12,8 +12,6 @@ const D = [
     ['Classic Chicken Burger', 95, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Crispy Burger', 110, 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=500&q=80'],
     ['Popcorn Chicken Burger', 100, 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80'],
-    ['SPL Chicken Burger', 120, 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80'],
-    ['SPL Chicken Burger with Cheese', 140, 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80'],
     ['Crispy No Bun Chicken Burger', 179, 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Rolls', [
@@ -22,8 +20,7 @@ const D = [
     ['Egg Roll', 75, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Roll', 100, 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Roll', 110, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
-    ['Popcorn Chicken Roll', 100, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80'],
-    ['SPL Chicken Roll', 120, 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=500&q=80']
+    ['Popcorn Chicken Roll', 100, 'https://images.unsplash.com/photo-1648896650464-1d61bb66ca07?auto=format&fit=crop&w=500&q=80']
   ]],
   ['French Fries', [
     ['Mini Fries', 49, 'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=80'],
@@ -40,13 +37,6 @@ const D = [
     ['Bread Omelette with Cheese', 89, 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Bread Omelette', 110, 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Bread Omelette with Cheese', 129, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80']
-  ]],
-  ['Pav Bajji', [
-    ['Mushroom Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Pav Bajji', 129, 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Pav Bajji', 110, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Pav Bajji', 129, 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=500&q=80'],
-    ['Egg Chicken Pav Bajji', 149, 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Starters', [
     ['Veg Fingers (6)', 79, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
@@ -65,7 +55,6 @@ const D = [
   ['Pizzas', [
     ['Cheese Blast', 99, 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80'],
     ['Cheese & Corn Pizza', 120, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80'],
-    ['Mushroom Pizza', 120, 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Pizza', 130, 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Corn Pizza', 140, 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Pizza', 140, 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=500&q=80'],
@@ -75,16 +64,15 @@ const D = [
   ['Sandwich Menu', [
     ['Mix Veg Sandwich', 80, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
     ['Corn & Cheese Sandwich', 90, 'https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=500&q=80'],
-    ['Mushroom Sandwich', 100, 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Sandwich', 100, 'https://images.unsplash.com/photo-1528736235302-52922df5c122?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Cheese Sandwich', 120, 'https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=500&q=80'],
     ['Chicken Sandwich', 120, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80'],
     ['Chicken & Cheese Sandwich', 140, 'https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Sandwich', 120, 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80']
   ]],
-  ['Devil Eggs', [
-    ['Crispy Devil Eggs - Green Masala (6)', 120, 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy Devil Eggs - Thadoori Masala (6)', 120, 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?auto=format&fit=crop&w=500&q=80']
+  ['Desserts', [
+    ['Brownie', 75, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80'],
+    ['Lava Cake', 75, 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=500&q=80']
   ]],
   ["Mojito's", [
     ['Lemon Sprite', 59, 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80'],
@@ -100,8 +88,7 @@ const D = [
     ['Egg Burger + Fries + Mojito', 150, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80'],
     ['Classic Chicken Burger + Fries + Mojito', 170, 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80'],
     ['Crispy Chicken Burger + Mojito or Fries', 160, 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy Chicken Burger + Fries + Mojito', 180, 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80'],
-    ['SPL Chicken Burger + Fries + Mojito', 230, 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80']
+    ['Crispy Chicken Burger + Fries + Mojito', 180, 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Rolls Combo', [
     ['Veg Roll + Fries + Mojito + 2 Fingers', 170, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
