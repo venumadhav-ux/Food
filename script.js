@@ -133,8 +133,8 @@ function toggleCategory(catId) {
 }
 
 function action(id) {
-  let e = document.querySelector(`[data-a="${id}"]`);
-  let q = cart[id] || 0;
+  const e = document.querySelector(`[data-a="${id}"]`);
+  const q = cart[id] || 0;
   if (e) {
     e.innerHTML = q
       ? `<div class="qty"><button onclick="change('${id}',-1)">−</button><b>${q}</b><button onclick="change('${id}',1)">+</button></div>`
@@ -171,23 +171,24 @@ function render() {
     `;
   });
 
-  document.getElementById('menu').innerHTML = menuEl;
+  const menuContainer = document.getElementById('menu');
+  if (menuContainer) menuContainer.innerHTML = menuEl;
   all().forEach(i => action(i.id));
 }
 
 function totals() {
   let count = 0, food = 0;
   Object.entries(cart).forEach(([id, q]) => {
-    let i = get(id);
+    const i = get(id);
     count += q;
     food += q * i.price;
   });
-  let parcel = orderType === 'parcel' ? count * PARCEL_FEE_PER_ITEM : 0;
+  const parcel = orderType === 'parcel' ? count * PARCEL_FEE_PER_ITEM : 0;
   return { count, food, parcel, total: food + parcel };
 }
 
 function update() {
-  let t = totals();
+  const t = totals();
   const cartBar = document.getElementById('cartBar');
   const cartCount = document.getElementById('cartCount');
   const cartTotal = document.getElementById('cartTotal');
@@ -206,7 +207,7 @@ function update() {
 }
 
 function change(id, x) {
-  let i = get(id);
+  const i = get(id);
   if (orderType === 'parcel' && i.diningOnly && x > 0) {
     return alert('This combo is available for dining only.');
   }
@@ -221,7 +222,7 @@ function cartRender() {
   const cartItems = document.getElementById('cartItems');
   if (!cartItems) return;
   cartItems.innerHTML = Object.entries(cart).map(([id, q]) => {
-    let i = get(id);
+    const i = get(id);
     return `<div class="cartrow">
       <div>
         <b>${i.name}</b>
@@ -274,9 +275,7 @@ async function getOrderNumber(items) {
       const data = await res.json();
       orderNum = data.orderNumber;
     }
-  } catch (err) {
-    console.error("API counter unavailable, using local daily counter:", err);
-  }
+  } catch (err) {}
 
   if (!orderNum) {
     const today = new Date().toISOString().split("T")[0];
@@ -393,4 +392,5 @@ function printCustomerBill(assignedNum = null) {
       <span>TOTAL</span>
       <span>₹${money(t.total)}</span>
     </div>
-    ${note
+    ${notes ? `
+    
