@@ -393,4 +393,24 @@ function printCustomerBill(assignedNum = null) {
       <span>₹${money(t.total)}</span>
     </div>
     ${notes ? `
-    
+    <div class="r-dash"></div>
+      <div><strong>Note:</strong> ${notes}</div>
+    ` : ""}
+    <div class="r-dash"></div>
+    <div class="r-footer">
+      Thank You! Visit Again 😊<br>
+      Instagram: @cheftejas369
+    </div>
+  `;
+
+  window.print();
+}
+
+const printBtn = document.getElementById("printBillButton");
+if (printBtn) {
+  printBtn.onclick = () => printCustomerBill();
+}
+
+// Force immediate execution when script loads
+render();
+update();

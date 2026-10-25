@@ -85,9 +85,6 @@ main { padding: 0 18px; }
 
 @media (min-width: 700px) { body { max-width: 900px; margin: auto; } }
 
-/* =========================================
-   Thermal Receipt Print Layout (58mm / 80mm)
-   ========================================= */
 @media print {
   body * { visibility: hidden; }
   html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; color: #000 !important; }
