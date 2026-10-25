@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <header class="top">
@@ -80,9 +80,12 @@
       </div>
       <textarea id="notesInput" placeholder="Special instructions (optional)"></textarea>
       <button id="whatsappButton" class="wa">Send Order on WhatsApp →</button>
+      <button id="printBillButton" class="print-btn" type="button">🖨️ Print Customer Bill</button>
     </div>
   </div>
 
-  <script src="script.js?v=8"></script>
+  <div id="receipt" class="receipt-print-area" aria-hidden="true"></div>
+
+  <script src="script.js?v=11"></script>
 </body>
 </html>
