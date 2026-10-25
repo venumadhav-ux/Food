@@ -8,21 +8,20 @@ body { margin: 0; background: #f7f7f5; color: #111; font-family: "DM Sans", sans
 .brand small { display: block; color: #ffad00; font: 800 10px "DM Sans"; letter-spacing: 1.5px; margin-top: 2px; }
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
-.ig-btn { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: transform .2s ease; }
+.ig-btn { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; }
 .ig-btn svg { width: 18px; height: 18px; }
-.ig-btn:active { transform: scale(0.92); }
 
 .open { border: 1px solid #444; border-radius: 30px; padding: 7px 12px; font-weight: 700; font-size: 12px; }
 .open:first-letter { color: #00d46a; }
 
-.hero { height: 560px; border-radius: 0 0 36px 36px; background: linear-gradient(90deg,#000d,#0004), url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85') center/cover; color: #fff; display: flex; align-items: center; }
+.hero { height: 520px; border-radius: 0 0 36px 36px; background: linear-gradient(90deg,#000d,#0004), url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85') center/cover; color: #fff; display: flex; align-items: center; }
 .hero > div { padding: 30px 24px; max-width: 650px; }
 .hero p { color: #ffad00; letter-spacing: 3px; font-weight: 800; font-size: 13px; }
-.hero h1 { font: 800 clamp(38px,9.5vw,60px)/.95 "Plus Jakarta Sans"; letter-spacing: -2px; margin: 22px 0 14px; }
+.hero h1 { font: 800 clamp(36px,9vw,56px)/.95 "Plus Jakarta Sans"; letter-spacing: -2px; margin: 20px 0 12px; }
 .hero em { font-style: normal; color: #ffad00; }
-.hero span { font-size: 16px; color: #eee; }
-.hero button { display: flex; justify-content: space-between; width: 270px; margin-top: 24px; border: 0; border-radius: 20px; padding: 16px 22px; background: #ff5a00; color: #fff; font-size: 17px; font-weight: 800; cursor: pointer; }
-.hero label { display: block; margin-top: 22px; font-size: 14px; }
+.hero span { font-size: 15px; color: #eee; }
+.hero button { display: flex; justify-content: space-between; width: 260px; margin-top: 22px; border: 0; border-radius: 20px; padding: 15px 20px; background: #ff5a00; color: #fff; font-size: 16px; font-weight: 800; cursor: pointer; }
+.hero label { display: block; margin-top: 20px; font-size: 13px; }
 
 .types { position: relative; margin: -28px 18px 24px; background: #fff; border-radius: 26px; padding: 8px; display: flex; gap: 8px; box-shadow: 0 15px 35px #0002; }
 .type { flex: 1; border: 0; border-radius: 20px; padding: 12px 14px; background: #f0f0ee; text-align: left; font-size: 22px; display: flex; gap: 10px; align-items: center; cursor: pointer; }
@@ -57,8 +56,7 @@ main { padding: 0 18px; }
 .footer-card h3 { margin: 0 0 6px; font-family: "Plus Jakarta Sans"; font-size: 18px; }
 .footer-card p { color: #888; font-size: 13px; margin: 0 0 16px; }
 .footer-contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.social-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 14px; font-weight: 700; font-size: 13px; text-decoration: none; color: #fff; transition: transform .2s ease; }
-.social-link:active { transform: scale(0.95); }
+.social-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 14px; font-weight: 700; font-size: 13px; text-decoration: none; color: #fff; }
 .ig-link { background: linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
 .phone-link { background: #22252c; border: 1px solid #333; }
 
@@ -82,24 +80,7 @@ main { padding: 0 18px; }
 .sheet textarea { width: 100%; height: 85px; border: 1px solid #ddd; border-radius: 16px; padding: 12px; font: 15px "DM Sans"; }
 .wa { width: 100%; border: 0; background: #00bd62; color: #fff; padding: 16px; border-radius: 16px; margin-top: 12px; font-weight: 800; font-size: 16px; cursor: pointer; }
 
-.print-btn {
-  width: 100%;
-  border: 2px solid #222;
-  background: #fff;
-  color: #111;
-  padding: 14px;
-  border-radius: 16px;
-  margin-top: 8px;
-  font-weight: 800;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.print-btn:active { background: #f0f0ee; }
-
+.print-btn { width: 100%; border: 2px solid #222; background: #fff; color: #111; padding: 14px; border-radius: 16px; margin-top: 8px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .receipt-print-area { display: none; }
 
 @media (min-width: 700px) { body { max-width: 900px; margin: auto; } }
@@ -108,30 +89,10 @@ main { padding: 0 18px; }
    Thermal Receipt Print Layout (58mm / 80mm)
    ========================================= */
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  html, body {
-    background: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    color: #000 !important;
-  }
-  .receipt-print-area, .receipt-print-area * {
-    visibility: visible;
-  }
-  .receipt-print-area {
-    display: block !important;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 78mm;
-    padding: 6px 10px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 12px;
-    line-height: 1.35;
-    color: #000;
-  }
+  body * { visibility: hidden; }
+  html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; color: #000 !important; }
+  .receipt-print-area, .receipt-print-area * { visibility: visible; }
+  .receipt-print-area { display: block !important; position: absolute; left: 0; top: 0; width: 78mm; padding: 6px 10px; font-family: 'Courier New', Courier, monospace; font-size: 12px; line-height: 1.35; color: #000; }
   .r-center { text-align: center; }
   .r-bold { font-weight: bold; }
   .r-large { font-size: 16px; }
