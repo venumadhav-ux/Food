@@ -196,13 +196,13 @@ function update() {
   const modalTotal = document.getElementById('modalTotal');
   const parcelLine = document.getElementById('parcelLine');
 
-  cartBar.hidden = !t.count;
-  cartCount.textContent = t.count;
-  cartTotal.textContent = money(t.total);
-  foodTotal.textContent = money(t.food);
-  parcelTotal.textContent = money(t.parcel);
-  modalTotal.textContent = money(t.total);
-  parcelLine.hidden = !t.parcel;
+  if (cartBar) cartBar.hidden = !t.count;
+  if (cartCount) cartCount.textContent = t.count;
+  if (cartTotal) cartTotal.textContent = money(t.total);
+  if (foodTotal) foodTotal.textContent = money(t.food);
+  if (parcelTotal) parcelTotal.textContent = money(t.parcel);
+  if (modalTotal) modalTotal.textContent = money(t.total);
+  if (parcelLine) parcelLine.hidden = !t.parcel;
 }
 
 function change(id, x) {
@@ -219,6 +219,7 @@ function change(id, x) {
 
 function cartRender() {
   const cartItems = document.getElementById('cartItems');
+  if (!cartItems) return;
   cartItems.innerHTML = Object.entries(cart).map(([id, q]) => {
     let i = get(id);
     return `<div class="cartrow">
@@ -238,13 +239,13 @@ function cartRender() {
 function openCart() {
   const cartModal = document.getElementById('cartModal');
   cartRender();
-  cartModal.hidden = false;
+  if (cartModal) cartModal.hidden = false;
   document.body.style.overflow = 'hidden';
 }
 
 function closeCart() {
   const cartModal = document.getElementById('cartModal');
-  cartModal.hidden = true;
+  if (cartModal) cartModal.hidden = true;
   document.body.style.overflow = '';
 }
 
@@ -274,7 +275,7 @@ async function getOrderNumber(items) {
       orderNum = data.orderNumber;
     }
   } catch (err) {
-    console.error("API error, using local daily counter:", err);
+    console.error("API counter unavailable, using local daily counter:", err);
   }
 
   if (!orderNum) {
@@ -296,39 +297,41 @@ async function getOrderNumber(items) {
 const whatsappButton = document.getElementById('whatsappButton');
 const notesInput = document.getElementById('notesInput');
 
-whatsappButton.onclick = async () => {
-  const t = totals();
-  if (!t.count) return alert("Please add at least one item.");
+if (whatsappButton) {
+  whatsappButton.onclick = async () => {
+    const t = totals();
+    if (!t.count) return alert("Please add at least one item.");
 
-  const items = Object.entries(cart).map(([id, q]) => {
-    const item = get(id);
-    return { name: item.name, quantity: q, lineTotal: item.price * q };
-  });
+    const items = Object.entries(cart).map(([id, q]) => {
+      const item = get(id);
+      return { name: item.name, quantity: q, lineTotal: item.price * q };
+    });
 
-  whatsappButton.disabled = true;
-  whatsappButton.textContent = "Generating Order...";
+    whatsappButton.disabled = true;
+    whatsappButton.textContent = "Generating Order...";
 
-  const orderNum = await getOrderNumber(items);
+    const orderNum = await getOrderNumber(items);
 
-  whatsappButton.disabled = false;
-  whatsappButton.textContent = "Send Order on WhatsApp →";
+    whatsappButton.disabled = false;
+    whatsappButton.textContent = "Send Order on WhatsApp →";
 
-  let msg = `🍽️ *CHEF TEJA'S FOOD ON WHEELS*\n\n🔢 *ORDER #${orderNum}*\n📦 *Type:* ${orderType === 'dining' ? 'Dining' : 'Parcel'}\n\n`;
-  items.forEach(i => {
-    msg += `• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\n`;
-  });
-  msg += `\n💰 *Food total:* ₹${t.food}`;
-  if (t.parcel) {
-    msg += `\n📦 *Parcel charge:* ₹${t.parcel} (₹${PARCEL_FEE_PER_ITEM} × ${t.count} items)`;
-  }
-  msg += `\n💵 *TOTAL: ₹${t.total}*`;
-  if (notesInput.value.trim()) {
-    msg += `\n\n📝 *Special instructions:* ${notesInput.value.trim()}`;
-  }
-  msg += `\n\nPlease prepare the order.`;
+    let msg = `🍽️ *CHEF TEJA'S FOOD ON WHEELS*\n\n🔢 *ORDER #${orderNum}*\n📦 *Type:* ${orderType === 'dining' ? 'Dining' : 'Parcel'}\n\n`;
+    items.forEach(i => {
+      msg += `• ${i.name} × ${i.quantity} = ₹${i.lineTotal}\n`;
+    });
+    msg += `\n💰 *Food total:* ₹${t.food}`;
+    if (t.parcel) {
+      msg += `\n📦 *Parcel charge:* ₹${t.parcel} (₹${PARCEL_FEE_PER_ITEM} × ${t.count} items)`;
+    }
+    msg += `\n💵 *TOTAL: ₹${t.total}*`;
+    if (notesInput && notesInput.value.trim()) {
+      msg += `\n\n📝 *Special instructions:* ${notesInput.value.trim()}`;
+    }
+    msg += `\n\nPlease prepare the order.`;
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-};
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+}
 
 function printCustomerBill(assignedNum = null) {
   const t = totals();
@@ -390,18 +393,4 @@ function printCustomerBill(assignedNum = null) {
       <span>TOTAL</span>
       <span>₹${money(t.total)}</span>
     </div>
-    ${notes ? `
-      <div class="r-dash"></div>
-      <div><strong>Note:</strong> ${notes}</div>
-    ` : ""}
-    <div class="r-dash"></div>
-    <div class="r-footer">
-      Thank You! Visit Again 😊<br>
-      Instagram: @cheftejas369
-    </div>
-  `;
-
-  window.print();
-}
-
-const 
+    ${note
