@@ -38,7 +38,7 @@ const D = [
     ['Egg Chicken Bread Omelette', 120, 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Bread Omelette with Cheese', 139, 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80']
   ]],
-    ['Starters', [
+  ['Starters', [
     ['Veg Fingers (6)', 89, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Popcorn (100gms)', 129, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=500&q=80'],
     ['Paneer Fingers (6)', 129, 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80'],
@@ -258,6 +258,41 @@ document.querySelectorAll('.type').forEach(b => {
   };
 });
 
+async function getOrderNumber(items) {
+  let orderNum = null;
+  try {
+    const res = await fetch("/api/order-number", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items,
+        orderType: orderType === "dining" ? "Dining" : "Parcel"
+      })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      orderNum = data.orderNumber;
+    }
+  } catch (err) {
+    console.error("API error, using local daily counter:", err);
+  }
+
+  if (!orderNum) {
+    const today = new Date().toISOString().split("T")[0];
+    const lastDate = localStorage.getItem("last_order_date");
+    let count = parseInt(localStorage.getItem("daily_order_count") || "0", 10);
+    if (lastDate !== today) {
+      count = 1;
+      localStorage.setItem("last_order_date", today);
+    } else {
+      count += 1;
+    }
+    localStorage.setItem("daily_order_count", count.toString());
+    orderNum = count;
+  }
+  return orderNum;
+}
+
 const whatsappButton = document.getElementById('whatsappButton');
 const notesInput = document.getElementById('notesInput');
 
@@ -273,40 +308,7 @@ whatsappButton.onclick = async () => {
   whatsappButton.disabled = true;
   whatsappButton.textContent = "Generating Order...";
 
-  let orderNum = null;
-
-  try {
-    const res = await fetch("/api/order-number", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items,
-        orderType: orderType === "dining" ? "Dining" : "Parcel"
-      })
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      orderNum = data.orderNumber;
-    }
-  } catch (err) {
-    console.error("API error, falling back to local counter:", err);
-  }
-
-  // Fallback to local daily counter if API/Redis is unavailable
-  if (!orderNum) {
-    const today = new Date().toISOString().split("T")[0];
-    const lastDate = localStorage.getItem("last_order_date");
-    let count = parseInt(localStorage.getItem("daily_order_count") || "0", 10);
-    if (lastDate !== today) {
-      count = 1;
-      localStorage.setItem("last_order_date", today);
-    } else {
-      count += 1;
-    }
-    localStorage.setItem("daily_order_count", count.toString());
-    orderNum = count;
-  }
+  const orderNum = await getOrderNumber(items);
 
   whatsappButton.disabled = false;
   whatsappButton.textContent = "Send Order on WhatsApp →";
@@ -328,5 +330,78 @@ whatsappButton.onclick = async () => {
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
-render();
-update();
+function printCustomerBill(assignedNum = null) {
+  const t = totals();
+  if (!t.count) return alert("Please add at least one item to generate a bill.");
+
+  const receipt = document.getElementById("receipt");
+  if (!receipt) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+  const dateStr = now.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  const displayOrderNum = assignedNum || (localStorage.getItem("daily_order_count") || "1");
+
+  let itemsHtml = "";
+  Object.entries(cart).forEach(([id, q]) => {
+    const item = get(id);
+    const lineTotal = item.price * q;
+    itemsHtml += `
+      <div class="r-item">
+        <div class="r-item-name">${item.name}</div>
+        <div class="r-row">
+          <span>${q} x ₹${money(item.price)}</span>
+          <span>₹${money(lineTotal)}</span>
+        </div>
+      </div>
+    `;
+  });
+
+  const notes = notesInput ? notesInput.value.trim() : "";
+
+  receipt.innerHTML = `
+    <div class="r-center r-bold r-large">CHEF TEJA'S</div>
+    <div class="r-center r-title">FOOD ON WHEELS</div>
+    <div class="r-center">Ph: +91 96036 96669</div>
+    <div class="r-dash"></div>
+    <div class="r-row">
+      <span class="r-bold">ORDER #${displayOrderNum}</span>
+      <span class="r-bold">${orderType.toUpperCase()}</span>
+    </div>
+    <div class="r-row">
+      <span>Date: ${dateStr}</span>
+      <span>${timeStr}</span>
+    </div>
+    <div class="r-dash"></div>
+    ${itemsHtml}
+    <div class="r-dash"></div>
+    <div class="r-row">
+      <span>Subtotal</span>
+      <span>₹${money(t.food)}</span>
+    </div>
+    ${t.parcel ? `
+      <div class="r-row">
+        <span>Parcel Fee (${t.count} items)</span>
+        <span>₹${money(t.parcel)}</span>
+      </div>
+    ` : ""}
+    <div class="r-dash"></div>
+    <div class="r-row r-bold r-large">
+      <span>TOTAL</span>
+      <span>₹${money(t.total)}</span>
+    </div>
+    ${notes ? `
+      <div class="r-dash"></div>
+      <div><strong>Note:</strong> ${notes}</div>
+    ` : ""}
+    <div class="r-dash"></div>
+    <div class="r-footer">
+      Thank You! Visit Again 😊<br>
+      Instagram: @cheftejas369
+    </div>
+  `;
+
+  window.print();
+}
+
+const 
