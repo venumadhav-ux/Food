@@ -80,23 +80,71 @@ main { padding: 0 18px; }
 .sheet textarea { width: 100%; height: 85px; border: 1px solid #ddd; border-radius: 16px; padding: 12px; font: 15px "DM Sans"; }
 .wa { width: 100%; border: 0; background: #00bd62; color: #fff; padding: 16px; border-radius: 16px; margin-top: 12px; font-weight: 800; font-size: 16px; cursor: pointer; }
 
-.print-btn { width: 100%; border: 2px solid #222; background: #fff; color: #111; padding: 14px; border-radius: 16px; margin-top: 8px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.print-btn {
+  width: 100%;
+  border: 2px solid #222;
+  background: #fff;
+  color: #111;
+  padding: 14px;
+  border-radius: 16px;
+  margin-top: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.print-btn:active { background: #f0f0ee; }
+
 .receipt-print-area { display: none; }
 
 @media (min-width: 700px) { body { max-width: 900px; margin: auto; } }
 
+/* ==============================================================
+   Single-Page Thermal Receipt Print Layout (Fixed Layout & Size)
+   ============================================================== */
 @media print {
-  body * { visibility: hidden; }
-  html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; color: #000 !important; }
-  .receipt-print-area, .receipt-print-area * { visibility: visible; }
-  .receipt-print-area { display: block !important; position: absolute; left: 0; top: 0; width: 78mm; padding: 6px 10px; font-family: 'Courier New', Courier, monospace; font-size: 12px; line-height: 1.35; color: #000; }
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  /* Completely remove on-screen elements to eliminate extra blank pages */
+  header, section, .types, main, footer, .cartbar, .modal {
+    display: none !important;
+  }
+
+  html, body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .receipt-print-area {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 320px; /* Perfect match for 58mm & 80mm rolls */
+    margin: 0 auto !important;
+    padding: 14px 16px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Courier New", monospace !important;
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    color: #000 !important;
+  }
+
   .r-center { text-align: center; }
-  .r-bold { font-weight: bold; }
-  .r-large { font-size: 16px; }
-  .r-title { font-size: 15px; letter-spacing: 0.5px; }
-  .r-dash { border-top: 1px dashed #000; margin: 6px 0; }
-  .r-row { display: flex; justify-content: space-between; }
-  .r-item { margin-bottom: 4px; }
-  .r-item-name { font-weight: bold; }
-  .r-footer { text-align: center; margin-top: 8px; font-size: 11px; }
+  .r-bold { font-weight: 800; }
+  .r-large { font-size: 20px !important; }
+  .r-title { font-size: 17px !important; font-weight: 700; letter-spacing: 0.5px; }
+  .r-dash { border-top: 2px dashed #000; margin: 8px 0; }
+  .r-row { display: flex; justify-content: space-between; font-size: 15px; margin: 3px 0; }
+  .r-item { margin-bottom: 6px; }
+  .r-item-name { font-weight: 800; font-size: 16px; }
+  .r-footer { text-align: center; margin-top: 12px; font-size: 13px; font-weight: 600; }
 }
