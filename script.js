@@ -6,13 +6,13 @@ let cart = {};
 const D = [
   ['Burgers', [
     ['Veg Burger', 80, 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=80'],
-    ['Paneer Burger', 110, 'https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=500&q=80'],
+    ['Paneer Burger', 110, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80'],
     ['Egg Burger', 85, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80'],
     ['Egg Chicken Burger', 119, 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80'],
-    ['Classic Chicken Burger', 105, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80'],
-    ['Chicken Crispy Burger', 120, 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=500&q=80'],
-    ['Popcorn Chicken Burger', 110, 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80'],
-    ['Crispy No Bun Chicken Burger', 189, 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80']
+    ['Classic Chicken Burger', 105, 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=500&q=80'],
+    ['Chicken Crispy Burger', 120, 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80'],
+    ['Popcorn Chicken Burger', 110, 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80'],
+    ['Crispy No Bun Chicken Burger', 189, 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80']
   ]],
   ['Rolls', [
     ['Veg Roll', 80, 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80'],
@@ -411,6 +411,5 @@ if (printBtn) {
   printBtn.onclick = () => printCustomerBill();
 }
 
-// Force immediate execution when script loads
 render();
 update();
