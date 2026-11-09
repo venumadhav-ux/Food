@@ -1,5 +1,4 @@
 const WHATSAPP_NUMBER = "919603696669";
-const PARCEL_FEE_PER_ITEM = 10;
 let orderType = "dining";
 let cart = {};
 
@@ -135,6 +134,29 @@ const menu = D.map(c => ({
 const all = () => menu.flatMap(c => c.items);
 const get = id => all().find(i => i.id === id);
 
+// Handwritten slip mapping for parcel extras
+function getParcelFeeForItem(catName, itemName) {
+  const cat = catName.toLowerCase();
+  const item = itemName.toLowerCase();
+
+  if (cat.includes('fries')) {
+    if (item.includes('loaded')) return 10;
+    return 5;
+  }
+
+  if (cat.includes('kabab')) return 10;
+  if (cat.includes('pizza')) return 10;
+  if (cat.includes('sandwich')) return 10;
+
+  if (cat.includes('burger')) return 5;
+  if (cat.includes('roll')) return 5;
+  if (cat.includes('starter')) return 5;
+  if (cat.includes('omelette')) return 5;
+  if (cat.includes('mojito')) return 5;
+
+  return 5;
+}
+
 function toggleCategory(catId) {
   const el = document.getElementById(catId);
   if (el) el.classList.toggle('open');
@@ -185,13 +207,29 @@ function render() {
 }
 
 function totals() {
-  let count = 0, food = 0;
+  let count = 0, food = 0, parcel = 0;
   Object.entries(cart).forEach(([id, q]) => {
-    const i = get(id);
-    count += q;
-    food += q * i.price;
+    let itemObj = null;
+    let catName = '';
+
+    for (let c of D) {
+      const match = c[1].find(x => slug(c[0] + '-' + x[0]) === id);
+      if (match) {
+        itemObj = match;
+        catName = c[0];
+        break;
+      }
+    }
+
+    if (itemObj) {
+      count += q;
+      food += q * itemObj[1];
+      if (orderType === 'parcel') {
+        parcel += q * getParcelFeeForItem(catName, itemObj[0]);
+      }
+    }
   });
-  const parcel = orderType === 'parcel' ? count * PARCEL_FEE_PER_ITEM : 0;
+
   return { count, food, parcel, total: food + parcel };
 }
 
@@ -230,7 +268,7 @@ function cartRender() {
   const cartItems = document.getElementById('cartItems');
   if (!cartItems) return;
   cartItems.innerHTML = Object.entries(cart).map(([id, q]) => {
-    const i = get(id);
+    let i = get(id);
     return `<div class="cartrow">
       <div>
         <b>${i.name}</b>
@@ -328,7 +366,7 @@ if (whatsappButton) {
     });
     msg += `\n💰 *Food total:* ₹${t.food}`;
     if (t.parcel) {
-      msg += `\n📦 *Parcel charge:* ₹${t.parcel} (₹${PARCEL_FEE_PER_ITEM} × ${t.count} items)`;
+      msg += `\n📦 *Parcel extra:* ₹${t.parcel}`;
     }
     msg += `\n💵 *TOTAL: ₹${t.total}*`;
     if (notesInput && notesInput.value.trim()) {
@@ -358,11 +396,11 @@ function printCustomerBill(assignedNum = null) {
     const lineTotal = item.price * q;
     itemsHtml += `
       <div class="r-item">
-        <div class="r-item-name">${item.name}</div>
-        <div class="r-row">
-          <span>${q} x ₹${money(item.price)}</span>
-          <span>₹${money(lineTotal)}</span>
+        <div class="r-item-left">
+          <span class="r-item-name">${item.name}</span>
+          <span class="r-item-calc">${q} x ₹${money(item.price)}</span>
         </div>
+        <div class="r-item-price">₹${money(lineTotal)}</div>
       </div>
     `;
   });
@@ -379,7 +417,7 @@ function printCustomerBill(assignedNum = null) {
       <span class="r-bold">${orderType.toUpperCase()}</span>
     </div>
     <div class="r-row">
-      <span>Date: ${dateStr}</span>
+      <span>${dateStr}</span>
       <span>${timeStr}</span>
     </div>
     <div class="r-dash"></div>
@@ -391,7 +429,7 @@ function printCustomerBill(assignedNum = null) {
     </div>
     ${t.parcel ? `
       <div class="r-row">
-        <span>Parcel Fee (${t.count} items)</span>
+        <span>Parcel Extra</span>
         <span>₹${money(t.parcel)}</span>
       </div>
     ` : ""}
@@ -407,7 +445,7 @@ function printCustomerBill(assignedNum = null) {
     <div class="r-dash"></div>
     <div class="r-footer">
       Thank You! Visit Again 😊<br>
-      Instagram: @cheftejas369
+      @cheftejas369
     </div>
   `;
 
